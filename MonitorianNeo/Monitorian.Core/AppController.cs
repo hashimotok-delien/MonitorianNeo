@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -11,6 +12,7 @@ using System.Windows.Data;
 
 using Monitorian.Core.Models;
 using Monitorian.Core.Models.Monitor;
+using Monitorian.Core.Models.Updates;
 using Monitorian.Core.Models.Watcher;
 using Monitorian.Core.ViewModels;
 using Monitorian.Core.Views;
@@ -34,6 +36,11 @@ public abstract class AppController
 	public WindowPainter WindowPainter { get; }
 	public NotifyIconContainer NotifyIconContainer { get; }
 
+	/// <summary>
+	/// Service to check, download and install updates
+	/// </summary>
+	public UpdateService Updates { get; }
+
 	private readonly SessionWatcher _sessionWatcher;
 	private readonly PowerWatcher _powerWatcher;
 	private readonly DisplaySettingsWatcher _displaySettingsWatcher;
@@ -53,6 +60,7 @@ public abstract class AppController
 
 		WindowPainter = new WindowPainter();
 		NotifyIconContainer = new NotifyIconContainer();
+		Updates = new UpdateService();
 
 		_sessionWatcher = new SessionWatcher();
 		_powerWatcher = new PowerWatcher();
@@ -97,8 +105,7 @@ public abstract class AppController
 		if (ViewManager.IsIconWheelEnabled())
 			NotifyIconContainer.MouseWheel += (_, delta) => ReflectMouseWheel(delta);
 
-		_sessionWatcher.Subscribe((e) => OnMonitorsChangeInferred(nameof(SessionWatcher), e));
-		_powerWatcher.Subscribe((e) => OnMonitorsChangeInferred(nameof(PowerWatcher), e), StartupAgent.IsStartedOnSignIn());
+		_sessionWatcher.Subscribe((e) => OnMonitorsChangeInferred(nameof(SessionWatcher), e));		_powerWatcher.Subscribe((e) => OnMonitorsChangeInferred(nameof(PowerWatcher), e), StartupAgent.IsStartedOnSignIn());
 		_displaySettingsWatcher.Subscribe((e) =>
 		{
 			if (!_powerWatcher.IsDisplayOff)
@@ -135,6 +142,68 @@ public abstract class AppController
 		}
 
 		await CleanAsync();
+
+		if (Settings.ChecksUpdateAtStartup)
+		{
+			_ = CheckUpdateOnStartupAsync();
+		}
+	}
+
+	/// <summary>
+	/// Checks for updates in the background at startup.
+	/// </summary>
+	private async Task CheckUpdateOnStartupAsync()
+	{
+		try
+		{
+			if (!await Updates.CheckAsync())
+				return;
+
+			if (Settings.InstallsUpdateAutomatically)
+			{
+				await InstallUpdateAsync();
+			}
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine("Failed to check for updates at startup." + Environment.NewLine + ex);
+			Logger.SaveException(ex);
+		}
+	}
+
+	/// <summary>
+	/// Downloads the available update and starts installing it. This application will exit on success.
+	/// </summary>
+	/// <returns>True if the installation has started</returns>
+	public async Task<bool> InstallUpdateAsync(CancellationToken cancellationToken = default)
+	{
+		var release = Updates.Latest;
+		if (release is null)
+			return false;
+
+		// A portable copy cannot be replaced by the installer.
+		if (!UpdateService.IsInstalled || string.IsNullOrWhiteSpace(release.InstallerUrl))
+		{
+			await UpdateService.OpenReleasePageAsync(release);
+			return false;
+		}
+
+		try
+		{
+			var installerPath = await Updates.DownloadInstallerAsync(release, cancellationToken);
+			Updates.LaunchInstaller(installerPath);
+
+			// Give the installer time to start, then exit so that files can be replaced.
+			await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+			_current.Dispatcher.Invoke(() => _current.Shutdown());
+			return true;
+		}
+		catch (Exception ex)
+		{
+			Debug.WriteLine("Failed to install the update." + Environment.NewLine + ex);
+			Logger.SaveException(ex);
+			return false;
+		}
 	}
 
 	public virtual void End()
@@ -143,6 +212,7 @@ public abstract class AppController
 
 		NotifyIconContainer.Dispose();
 		WindowPainter.Dispose();
+		Updates.Dispose();
 
 		_sessionWatcher.Dispose();
 		_powerWatcher.Dispose();

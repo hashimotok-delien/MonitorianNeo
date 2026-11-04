@@ -192,4 +192,28 @@
   <data name="UseLargeElements" xml:space="preserve">
     <value>Use large sliders</value>
   </data>
+  <data name="CheckUpdate" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="CheckUpdateAtStartup" xml:space="preserve">
+    <value>Check for updates at startup</value>
+  </data>
+  <data name="CheckingUpdate" xml:space="preserve">
+    <value>Checking for updates...</value>
+  </data>
+  <data name="DownloadingUpdate" xml:space="preserve">
+    <value>Downloading update... {0}%</value>
+  </data>
+  <data name="InstallUpdateAutomatically" xml:space="preserve">
+    <value>Install updates automatically</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>Update to {0}</value>
+  </data>
+  <data name="UpdateCheckFailed" xml:space="preserve">
+    <value>Could not check for updates</value>
+  </data>
+  <data name="UpToDate" xml:space="preserve">
+    <value>Up to date</value>
+  </data>
 </root>

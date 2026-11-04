@@ -148,6 +148,32 @@
 
 		<Separator Style="{StaticResource MenuSeparatorStyle}"/>
 
+		<!-- Update -->
+		<ContentControl Style="{StaticResource MenuItemStyle}">
+			<Button Padding="8,4"
+					Style="{StaticResource PlainButtonItemStyle}"
+					Content="{Binding UpdateStatusText}"
+					IsEnabled="{Binding CanUpdate}"
+					Click="Update_Click"/>
+		</ContentControl>
+
+		<ContentControl Style="{StaticResource MenuItemStyle}">
+			<ToggleButton Padding="8,4"
+						  Style="{StaticResource CheckButtonItemStyle}"
+						  Content="{x:Static properties:Resources.CheckUpdateAtStartup}"
+						  IsChecked="{Binding Settings.ChecksUpdateAtStartup}"/>
+		</ContentControl>
+
+		<ContentControl Style="{StaticResource MenuItemStyle}">
+			<ToggleButton Padding="8,4"
+						  Style="{StaticResource CheckButtonItemStyle}"
+						  Content="{x:Static properties:Resources.InstallUpdateAutomatically}"
+						  IsChecked="{Binding Settings.InstallsUpdateAutomatically}"
+						  IsEnabled="{Binding Settings.ChecksUpdateAtStartup}"/>
+		</ContentControl>
+
+		<Separator Style="{StaticResource MenuSeparatorStyle}"/>
+
 		<!-- Close -->
 		<ContentControl Style="{StaticResource MenuItemStyle}">
 			<Button Padding="8,4"

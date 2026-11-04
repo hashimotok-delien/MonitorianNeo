@@ -175,6 +175,28 @@ public class Settings : BindableBase
 	}
 	private bool _recordsOperationLog;
 
+	/// <summary>
+	/// Whether to check for updates at startup
+	/// </summary>
+	[DataMember]
+	public bool ChecksUpdateAtStartup
+	{
+		get => _checksUpdateAtStartup;
+		set => SetProperty(ref _checksUpdateAtStartup, value);
+	}
+	private bool _checksUpdateAtStartup = true; // default
+
+	/// <summary>
+	/// Whether to install an update automatically when found
+	/// </summary>
+	[DataMember]
+	public bool InstallsUpdateAutomatically
+	{
+		get => _installsUpdateAutomatically;
+		set => SetProperty(ref _installsUpdateAutomatically, value);
+	}
+	private bool _installsUpdateAutomatically;
+
 	#endregion
 
 	protected Type[] KnownTypes { get; set; }

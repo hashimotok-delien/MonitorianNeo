@@ -45,6 +45,11 @@ public partial class MenuWindow : Window
 		FlowElement.EnsureFlowDirection(this);
 	}
 
+	private async void Update_Click(object sender, RoutedEventArgs e)
+	{
+		await ViewModel.CheckOrInstallUpdateAsync();
+	}
+
 	private void InvertScrollDirection_Click(object sender, RoutedEventArgs e)
 	{
 		if (sender is ButtonBase button)

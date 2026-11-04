@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 using Monitorian.Core.Models;
+using Monitorian.Core.Models.Updates;
 
 namespace Monitorian.Core.ViewModels;
 
@@ -14,6 +15,8 @@ public class MenuWindowViewModel : ViewModelBase
 	public MenuWindowViewModel(AppController controller)
 	{
 		this._controller = controller ?? throw new ArgumentNullException(nameof(controller));
+
+		_controller.Updates.PropertyChanged += OnUpdatesChanged;
 
 		CleanLicense();
 	}
@@ -89,6 +92,77 @@ public class MenuWindowViewModel : ViewModelBase
 
 	#endregion
 
+	#region Update
+
+	private UpdateService Updates => _controller.Updates;
+
+	/// <summary>
+	/// Text of the update menu item
+	/// </summary>
+	public string UpdateStatusText
+	{
+		get
+		{
+			if (Updates.IsDownloading)
+				return string.Format(Properties.Resources.DownloadingUpdate, (int)(Updates.DownloadProgress * 100));
+
+			if (Updates.Latest is { } release)
+				return string.Format(Properties.Resources.UpdateAvailable, $"v{release.DisplayVersion}");
+
+			return Updates.State switch
+			{
+				UpdateState.Checking => Properties.Resources.CheckingUpdate,
+				UpdateState.UpToDate => Properties.Resources.UpToDate,
+				UpdateState.Failed => Properties.Resources.UpdateCheckFailed,
+				_ => Properties.Resources.CheckUpdate,
+			};
+		}
+	}
+
+	/// <summary>
+	/// Whether the update menu item can be clicked
+	/// </summary>
+	public bool CanUpdate => (Updates.State is not UpdateState.Checking) && !Updates.IsDownloading;
+
+	/// <summary>
+	/// Checks for updates, or installs the available update.
+	/// </summary>
+	public async Task CheckOrInstallUpdateAsync()
+	{
+		if (!CanUpdate)
+			return;
+
+		if (Updates.Latest is not null)
+		{
+			await _controller.InstallUpdateAsync();
+			return;
+		}
+
+		await Updates.CheckAsync();
+	}
+
+	private void OnUpdatesChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+	{
+		// The update service notifies from a background thread.
+		var dispatcher = System.Windows.Application.Current?.Dispatcher;
+		if ((dispatcher is null) || dispatcher.CheckAccess())
+		{
+			Raise();
+		}
+		else
+		{
+			dispatcher.Invoke(Raise);
+		}
+
+		void Raise()
+		{
+			OnPropertyChanged(nameof(UpdateStatusText));
+			OnPropertyChanged(nameof(CanUpdate));
+		}
+	}
+
+	#endregion
+
 	public event EventHandler CloseAppRequested;
 
 	/// <summary>
@@ -107,6 +181,7 @@ public class MenuWindowViewModel : ViewModelBase
 
 		if (disposing)
 		{
+			_controller.Updates.PropertyChanged -= OnUpdatesChanged;
 			CloseAppRequested = null;
 		}
 

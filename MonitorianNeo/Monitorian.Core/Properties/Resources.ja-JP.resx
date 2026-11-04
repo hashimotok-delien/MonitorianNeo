@@ -192,4 +192,28 @@
   <data name="UseLargeElements" xml:space="preserve">
     <value>大きいスライダーを使う</value>
   </data>
+  <data name="CheckUpdate" xml:space="preserve">
+    <value>更新を確認</value>
+  </data>
+  <data name="CheckUpdateAtStartup" xml:space="preserve">
+    <value>起動時に更新を確認</value>
+  </data>
+  <data name="CheckingUpdate" xml:space="preserve">
+    <value>確認中…</value>
+  </data>
+  <data name="DownloadingUpdate" xml:space="preserve">
+    <value>更新をダウンロード中… {0}%</value>
+  </data>
+  <data name="InstallUpdateAutomatically" xml:space="preserve">
+    <value>自動で更新する</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>{0} に更新</value>
+  </data>
+  <data name="UpdateCheckFailed" xml:space="preserve">
+    <value>確認できませんでした</value>
+  </data>
+  <data name="UpToDate" xml:space="preserve">
+    <value>最新版です</value>
+  </data>
 </root>

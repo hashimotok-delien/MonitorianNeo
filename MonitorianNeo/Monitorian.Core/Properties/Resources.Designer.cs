@@ -10,8 +10,8 @@
 
 namespace Monitorian.Core.Properties {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,15 +23,15 @@ namespace Monitorian.Core.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +45,7 @@ namespace Monitorian.Core.Properties {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,7 +59,7 @@ namespace Monitorian.Core.Properties {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Adjust SDR content brightness.
         /// </summary>
@@ -68,7 +68,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("AdjustSdrContent", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Command-line arguments.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("Arguments", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Change contrast.
         /// </summary>
@@ -86,7 +86,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("ChangeContrast", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Change adjustable range.
         /// </summary>
@@ -95,7 +95,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("ChangeRange", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Change brightness in unison.
         /// </summary>
@@ -104,7 +104,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("ChangeUnison", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
@@ -113,7 +113,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("Close", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Defer change until stopped.
         /// </summary>
@@ -122,7 +122,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("DeferChange", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enable changing contrast.
         /// </summary>
@@ -131,7 +131,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("EnableContrast", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enable showing monitor identity.
         /// </summary>
@@ -140,7 +140,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("EnableIdentity", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enable changing adjustable range.
         /// </summary>
@@ -149,7 +149,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("EnableRange", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enable changing brightness in unison.
         /// </summary>
@@ -158,7 +158,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("EnableUnison", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Invert scroll direction.
         /// </summary>
@@ -167,7 +167,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("InvertScrollDirection", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Mouse horizontal wheel.
         /// </summary>
@@ -176,7 +176,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("MouseHorizontalWheel", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Mouse vertical wheel.
         /// </summary>
@@ -185,7 +185,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("MouseVerticalWheel", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Restore brightness on reconnection.
         /// </summary>
@@ -194,7 +194,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("RestoreReconnection", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
@@ -203,7 +203,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Show adjusted brightness.
         /// </summary>
@@ -212,7 +212,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("ShowAdjusted", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Show monitor identity.
         /// </summary>
@@ -221,7 +221,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("ShowIdentity", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Show current number.
         /// </summary>
@@ -230,7 +230,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("ShowNumber", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Sort by monitor arrangement.
         /// </summary>
@@ -239,7 +239,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("SortArrangement", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Start on sign in.
         /// </summary>
@@ -248,7 +248,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("StartSignIn", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Touchpad horizontal swipe.
         /// </summary>
@@ -257,7 +257,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("TouchpadHorizontalSwipe", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Touchpad vertical swipe.
         /// </summary>
@@ -266,7 +266,7 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("TouchpadVerticalSwipe", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Use accent color for brightness.
         /// </summary>
@@ -275,13 +275,85 @@ namespace Monitorian.Core.Properties {
                 return ResourceManager.GetString("UseAccentColor", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Use large sliders.
         /// </summary>
         public static string UseLargeElements {
             get {
                 return ResourceManager.GetString("UseLargeElements", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Check for updates.
+        /// </summary>
+        public static string CheckUpdate {
+            get {
+                return ResourceManager.GetString("CheckUpdate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Check for updates at startup.
+        /// </summary>
+        public static string CheckUpdateAtStartup {
+            get {
+                return ResourceManager.GetString("CheckUpdateAtStartup", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Checking for updates....
+        /// </summary>
+        public static string CheckingUpdate {
+            get {
+                return ResourceManager.GetString("CheckingUpdate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading update... {0}%.
+        /// </summary>
+        public static string DownloadingUpdate {
+            get {
+                return ResourceManager.GetString("DownloadingUpdate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Install updates automatically.
+        /// </summary>
+        public static string InstallUpdateAutomatically {
+            get {
+                return ResourceManager.GetString("InstallUpdateAutomatically", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Update to {0}.
+        /// </summary>
+        public static string UpdateAvailable {
+            get {
+                return ResourceManager.GetString("UpdateAvailable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Could not check for updates.
+        /// </summary>
+        public static string UpdateCheckFailed {
+            get {
+                return ResourceManager.GetString("UpdateCheckFailed", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Up to date.
+        /// </summary>
+        public static string UpToDate {
+            get {
+                return ResourceManager.GetString("UpToDate", resourceCulture);
             }
         }
     }
