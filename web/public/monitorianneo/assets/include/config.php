@@ -1,6 +1,6 @@
 <?php
 /**
- * PulseWeaver 共通設定
+ * MonitorianNeo 共通設定
  *
  * ここだけ書き換えれば全ページに反映される。
  * assets/include/ は public/.htaccess の `RewriteRule (^|/)include(/|$) - [F,L]`
@@ -11,25 +11,25 @@
  */
 
 // 商品の表示名
-$PRODUCT_NAME = 'PulseWeaver';
+$PRODUCT_NAME = 'MonitorianNeo';
 
 // ロゴ横に出す絵文字（不要なら ''）
 $PRODUCT_EMOJI = '🎚️';
 
 // 公式サイトのフォルダ名。ランディングのページ遷移アニメの判定に使う
-$PRODUCT_SLUG = 'pulseweaver';
+$PRODUCT_SLUG = 'monitorianneo';
 
-// ヘッダーロゴのラベル（Bot / Premium など）。各ページで上書き可
+// ヘッダーロゴのラベル（Mixer など）。各ページで上書き可
 $LOGO_LABEL ??= 'Mixer';
 
 // ドキュメントサイト（README・使い方）
-$DOCS_URL = 'https://github.com/hashimotok-delien/PulseWeaver#readme';
+$DOCS_URL = 'https://github.com/hashimotok-delien/MonitorianNeo#readme';
 
 // ダウンロード（リリース一覧）
-$DOWNLOAD_URL = 'https://github.com/hashimotok-delien/PulseWeaver/releases';
+$DOWNLOAD_URL = 'https://github.com/hashimotok-delien/MonitorianNeo/releases';
 
 // サポート窓口（GitHub Issues）
-$SUPPORT_URL = 'https://github.com/hashimotok-delien/PulseWeaver/issues';
+$SUPPORT_URL = 'https://github.com/hashimotok-delien/MonitorianNeo/issues';
 
 // ヘッダーのアイコン画像。assets/img/ に置き、商品ルートからの相対パスで書く
 // （ランディングは icon-120.webp / icon.webp / icon.png を <picture> で出し分けるため

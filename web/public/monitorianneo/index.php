@@ -5,7 +5,7 @@
  * 構成: 自己完結型（CSS はこのファイル内の <style> にインラインで持つ）
  * 　　　商品名・URL は assets/include/config.php に集約
  *
- * 置き場所の前提: public/<slug>/index.php（＝ドキュメンルート直下の1階層）
+ * 置き場所の前提: public/monitorianneo/index.php（＝ドキュメントルート直下の1階層）
  * そのため favicon やフォントは ../ で参照している。
  */
 require __DIR__ . '/assets/include/config.php';
@@ -20,7 +20,7 @@ require __DIR__ . '/assets/include/config.php';
 <meta property="og:type" content="website">
 <meta property="og:title" content="<?= $PRODUCT_NAME ?> | <?= $SITE_OWNER ?>">
 <meta property="og:description" content="9入力を4出力へ自由に振り分ける、Windows向けの無料オーディオミキサー。入力と出力それぞれの音量調整、構成の保存・切替、自動更新に対応。">
-<meta property="og:image" content="https://hmk.delien.xyz/pulseweaver/assets/img/og.png">
+<meta property="og:image" content="https://hmk.delien.xyz/monitorianneo/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
@@ -396,7 +396,7 @@ h2{
                       ./assets/img/screenshot-1-900.webp?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-1-900.webp') ?: time() ?> 900w,
                       ./assets/img/screenshot-1-1200.webp?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-1-1200.webp') ?: time() ?> 1200w"
               sizes="(max-width: 1060px) calc(100vw - 90px), 900px">
-      <img src="./assets/img/png/screenshot-1.png?v=<?= @filemtime(__DIR__ . '/assets/img/png/screenshot-1.png') ?: time() ?>" alt="PulseWeaver のミキサー画面。H/W入力・バーチャル入力・H/W出力の一覧と音量スライダーが並んでいる"
+      <img src="./assets/img/png/screenshot-1.png?v=<?= @filemtime(__DIR__ . '/assets/img/png/screenshot-1.png') ?: time() ?>" alt="MonitorianNeo のミキサー画面。H/W入力・バーチャル入力・H/W出力の一覧と音量スライダーが並んでいる"
            width="1200" height="980" loading="lazy" decoding="async"
            style="width:100%; height:auto; border-radius:12px; box-shadow:0 0 20px rgba(var(--accent-rgb),0.3);">
     </picture>
@@ -410,7 +410,7 @@ h2{
                       ./assets/img/screenshot-2-900.webp?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-2-900.webp') ?: time() ?> 900w,
                       ./assets/img/screenshot-2-1200.webp?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-2-1200.webp') ?: time() ?> 1200w"
               sizes="(max-width: 1060px) calc(100vw - 90px), 900px">
-      <img src="./assets/img/png/screenshot-2.png?v=<?= @filemtime(__DIR__ . '/assets/img/png/screenshot-2.png') ?: time() ?>" alt="PulseWeaver の設定画面。一般・音声・構成・更新情報・このアプリについてのメニューがある"
+      <img src="./assets/img/png/screenshot-2.png?v=<?= @filemtime(__DIR__ . '/assets/img/png/screenshot-2.png') ?: time() ?>" alt="MonitorianNeo の設定画面。一般・音声・構成・更新情報・このアプリについてのメニューがある"
            width="1200" height="980" loading="lazy" decoding="async"
            style="width:100%; height:auto; border-radius:12px; box-shadow:0 0 20px rgba(var(--accent-rgb),0.3);">
     </picture>

@@ -105,7 +105,7 @@ require __DIR__ . '/assets/include/config.php';
 </head>
 <body>
 
-  <?php $BASE = '.'; $LOGO_LABEL = 'Bot'; ?>
+  <?php $BASE = '.'; $LOGO_LABEL = 'Mixer'; ?>
   <?php include __DIR__ . '/assets/include/header.php'; ?>
 
   <main>
@@ -166,7 +166,7 @@ require __DIR__ . '/assets/include/config.php';
       <!-- ===== 第4条 ===== -->
       <section class="legal-section" id="art4">
         <h2>第4条（保存期間および削除）</h2>
-        <p>設定情報は利用者の端末内にのみ保存され、アプリのアンインストール、または <code>%LOCALAPPDATA%\PulseWeaver</code> フォルダの削除により消去されます。運営が取得・保管する情報はありません。</p>
+        <p>設定情報は利用者の端末内にのみ保存され、アプリのアンインストール、または <code>%LOCALAPPDATA%\MonitorianNeo</code> フォルダの削除により消去されます。運営が取得・保管する情報はありません。</p>
       </section>
 
       <!-- ===== 第5条 ===== -->

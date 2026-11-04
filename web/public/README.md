@@ -1,67 +1,59 @@
-# 商品サイト テンプレート（`templates/product/`）
+# MonitorianNeo 公式サイト（`web/public/monitorianneo/`）
 
-`public/cultivate/` の構成をそのまま流用した、新しい商品（Bot / SaaS / ツールなど）用の
-公式サイトひな形です。**このフォルダ自体は公開されません**（`public/` の外にあるため FTP 対象外）。
+仮想オーディオミキサー **MonitorianNeo** の商品ページ一式です。
+`web/public/**` への push を契機に `.github/workflows/copy_web.yml` が
+`hashimotok-delien/hmk.delien.xyz` の `public/monitorianneo/` へ同期します。
 
-コピーして `public/<slug>/` に置けば、そのまま動く状態にしてあります。
+- 公開 URL: `https://hmk.delien.xyz/monitorianneo/`
+- 商品名・リンクは `assets/include/config.php` に集約（本文を触る前にここを確認）
 
 ---
 
 ## 1. 構成
 
 ```
-templates/product/
-├── README.md                  … このファイル
+web/public/monitorianneo/
 ├── index.php                  … ランディングページ（自己完結型・インラインCSS）
-├── privacy.php                … プライバシーポリシー（要 文面作成）
-├── terms.php                  … 利用規約（要 文面作成）
+├── privacy.php                … プライバシーポリシー
+├── terms.php                  … 利用規約
 ├── plans/
-│   ├── index.php              … プラン一覧／比較／契約の流れ／FAQ
-│   ├── success.php            … 決済成功ページ（noindex）
-│   ├── cancel.php             … 決済キャンセルページ（noindex）
 │   └── css/
-│       └── style.css          … プラン・法務ページ共通のデザインシステム
+│       └── style.css          … 法務ページ共通のデザインシステム
 └── assets/
     ├── include/
     │   ├── config.php         … 商品名・URL・著作権表記などの一元管理
     │   ├── header.php         … 共通ヘッダー
     │   └── footer.php         … 共通フッター
-    └── img/                   … アイコン・スクリーンショット置き場（空）
+    └── img/                   … アイコン・スクリーンショット（webp / png の複数サイズ）
 ```
 
-| ページ | URL（コピー後） | スタイル |
+| ページ | URL | スタイル |
 |---|---|---|
-| `index.php` | `/product-name` (`/product-name/`) | ページ内にインライン `<style>` |
-| `plans/index.php` | `/product-name/plans/` | `plans/css/style.css` |
-| `plans/success.php` | `/product-name/plans/success` | 〃 |
-| `plans/cancel.php` | `/product-name/plans/cancel` | 〃 |
-| `privacy.php` | `/product-name/privacy` | `plans/css/style.css` + 最小限の追記 |
-| `terms.php` | `/product-name/terms` | `plans/css/style.css` + 最小限の追記 |
+| `index.php` | `/monitorianneo/` | ページ内にインライン `<style>` |
+| `privacy.php` | `/monitorianneo/privacy` | `plans/css/style.css` + 最小限の追記 |
+| `terms.php` | `/monitorianneo/terms` | `plans/css/style.css` + 最小限の追記 |
 
 ---
 
-## 2. 新規商品を追加する手順
+## 2. 更新の手順
 
-### (1) フォルダをコピー
+### (1) まず `assets/include/config.php` を確認
 
-```powershell
-Copy-Item templates\product public\<slug> -Recurse
-```
+商品名・リンク・アクセント色はここだけで全ページに反映されます。
+フォルダ名（`monitorianneo`）が URL とそのまま対応するため、安易に変えないこと。
 
-`<slug>` は URL に出る英小文字の名前（例: `cultivate`, `magonote-bot`）。
-
-### (2) `assets/include/config.php` を書き換える
+### (2) `assets/include/config.php` の主な変数
 
 ここだけで商品名・リンクが全ページに反映されます。
 
 | 変数 | 内容 |
 |---|---|
-| `$PRODUCT_NAME` | 表示名（例: `Cultivate`） |
+| `$PRODUCT_NAME` | 表示名（`MonitorianNeo`） |
 | `$PRODUCT_EMOJI` | ロゴ横の絵文字（不要なら `''`） |
 | `$PRODUCT_SLUG` | フォルダ名。ランディングのページ遷移アニメの判定に使用 |
-| `$LOGO_LABEL` | ヘッダーロゴのラベル（`Bot` / `Premium` など。各ページで上書き可） |
+| `$LOGO_LABEL` | ヘッダーロゴのラベル（`Mixer` など。各ページで上書き可） |
 | `$DOCS_URL` | ドキュメントサイトの URL（別ドメインなら絶対URL） |
-| `$SUPPORT_URL` | サポート窓口（Discord 招待など） |
+| `$SUPPORT_URL` | サポート窓口（GitHub Issues など） |
 | `$ICON_PATH` | アイコン画像への相対パス |
 | `$ACCENT_RGB` | アクセント色の `R,G,B`（JS の遷移アニメ用） |
 | `$SITE_OWNER` | `<title>` の `\|` 以降（例: `けい🤖`） |
@@ -71,12 +63,10 @@ Copy-Item templates\product public\<slug> -Recurse
 > 各ページが `<!DOCTYPE html>` より前に `require` しているため、閉じタグ後の空白や改行でも
 > 出力が始まるとレイアウトが崩れます（末尾に `?>` を書かないのが安全）。
 
-### (3) 本文の `（TODO: ...）` を埋める
+### (3) 本文を埋める
 
 - `index.php` … キャッチコピー、できること、導入メリット、導入手順、使用イメージ
-- `plans/index.php` … プラン名・価格・特典・比較表・契約の流れ・FAQ
-- `plans/success.php` / `plans/cancel.php` … 決済後の案内文
-- `privacy.php` / `terms.php` … **法務文面は必ず自作する**（テンプレート文のまま公開しない）
+- `privacy.php` / `terms.php` … 文面を変えたら制定日・最終改定日も合わせて更新する
 
 ### (4) 画像を自前配信する
 
@@ -92,31 +82,20 @@ Gyazo などの外部URLを直接貼るのは避けてください（リンク�
 
 ### (5) ポートフォリオ／ドキュメントからリンクする
 
-- `public/index.php`（ポートフォリオ）の該当カードに `href="./<slug>/"` を追加
-- ドキュメントサイトがある場合は `docs/<slug>/` を作成し、`docs/index.php` のポータルにも追加
-- 内部リンクは**拡張子なし**で書く（`.php` は付けない。フォルダのトップは `./` か `<slug>/`）
+- ポートフォリオ（`hmk.delien.xyz` 側の `public/index.php`）の該当カードに `href="./monitorianneo/"` を追加
+- ドキュメントサイトを用意する場合は doc-hub 側に `docs/monitorianneo/` を作成し、`docs/index.php` のポータルにも追加
+- 内部リンクは**拡張子なし**で書く（`.php` は付けない。フォルダのトップは `./` か `monitorianneo/`）
 
 ### (6) フォントのサブセット対象に追加
 
-`tools/build_fonts.py` の `PUBLIC_PAGES` に新ページを追加しないと、そのページだけ
-文字がフォントに含まれず別フォントで表示されます。
+フォントのサブセット生成（`tools/build_fonts.py`）は doc-hub 側のリポジトリにあります。
+ページ内の文字を大きく変えたときは、doc-hub の `PUBLIC_PAGES` に
+`monitorianneo/index.php` が入っていることを確認し、`python tools/build_fonts.py` を実行して
+`public/assets/fonts/` を再生成してください。
 
-```python
-PUBLIC_PAGES = [
-    "index.php",
-    "calendar.php",
-    "cultivate/index.php",
-    "<slug>/index.php",        # ← 追加
-    "<slug>/plans/index.php",  # ← 追加
-    ...
-]
-```
+### (7) エージェント定義に構成メモを追記
 
-追加後に `python tools/build_fonts.py` を実行して `public/assets/fonts/` を再生成します。
-
-### (7) エージェント定義の構成図を更新
-
-`.github/agents/navi.agent.md` の「全体構成」にフォルダを追記しておくと、
+`.github/agents/navi.agent.md` にフォルダ構成のメモを追記しておくと、
 以後の作業で構成の把握がぶれません。
 
 ---
@@ -132,7 +111,7 @@ PUBLIC_PAGES = [
   - `privacy.php` / `terms.php`（商品ルート）… `$BASE = '.'`
   - `plans/*.php`（1階層下）… `$BASE = '..'`
   - `header.php` / `footer.php` は `<?= $BASE ?? '.' ?>` を使うので、**include 前に必ず代入する**
-- **このテンプレートはドキュメントルート直下の1階層（`public/<slug>/`）前提。**
+- **このサイトはドキュメントルート直下の1階層（`public/monitorianneo/`）前提。**
   `index.php` の favicon が `../favicon.png`、フォントが `../assets/fonts/` なのはそのため。
   さらに深い階層に置く場合はパスを全部見直すこと。
 - 法務ページの CSS は `plans/css/style.css` を**相対パス**で読んでいる（`plans/css/style.css`）。
@@ -168,15 +147,16 @@ PUBLIC_PAGES = [
 
 - 各ページに `<title>` と `<meta name="description">` を必ず書く。
 - ランディングには OGP / Twitter カード（`og:image` は 1200x630 の絶対URL）を設定する。
-- **`plans/success.php` / `plans/cancel.php` は `noindex` 必須**
+- 課金ページ（`plans/success.php` など）を将来追加する場合は `noindex` を付ける
   （決済フローの結果ページを検索結果に出さない）。
 - 新しいページを公開したら、サイトマップや `robots.txt` を運用している場合は追加する。
 
 ### 法務
 
 - `privacy.php` / `terms.php` は**雛形**。公開前に必ず自サービス用に書き直す。
-- 有料プランを提供する場合は、特定商取引法に基づく表記（事業者名・連絡先・支払時期など）も必要。
-- 決済事業者（Stripe など）の名前・データの取扱いはプライバシーポリシーに明記する。
+- 本サービスは無料配布のため、特定商取引法に基づく表記は不要。
+  将来有料化する場合は、事業者名・連絡先・支払時期などの表記と、
+  決済事業者（Stripe など）の名前・データの取扱いのプライバシーポリシーへの明記が必要。
 
 ### アクセシビリティ・表示
 
@@ -198,23 +178,23 @@ PUBLIC_PAGES = [
 
 ```powershell
 # 構文チェック
-Get-ChildItem templates\product -Recurse -Filter *.php | ForEach-Object { php -l $_.FullName }
+Get-ChildItem web\public\monitorianneo -Recurse -Filter *.php | ForEach-Object { php -l $_.FullName }
 
-# ローカルプレビュー（public をドキュメントルートにする）
-php -S localhost:8000 -t public
-# → http://localhost:8000/<slug>/ を開く
+# ローカルプレビュー（web/public をドキュメントルートにする）
+php -S localhost:8000 -t web/public
+# → http://localhost:8000/monitorianneo/ を開く
 ```
 
 - [ ] PHP の Warning / Fatal が出ていない（`@filemtime` は失敗時に `time()` にフォールバック）
 - [ ] アイコン・スクリーンショット・favicon が 404 になっていない
 - [ ] ヘッダーのロゴ／ナビ、フッターの利用規約リンクが正しい階層を指している
 - [ ] モバイル幅でレイアウトが崩れていない
-- [ ] `plans/success` / `plans/cancel` に `noindex` が入っている
+- [ ] 法務ページ（`/monitorianneo/privacy`・`/monitorianneo/terms`）が 200 で開く
 
 ---
 
 ## 5. 参考
 
-- 実例: `public/cultivate/`（このテンプレートの元）
-- デザインの基準: `docs/cultivate/assets/css/style.css`（ドキュメントサイト共通のカラースキーム）
-- フォント生成: `tools/build_fonts.py`
+- 同期先: `hashimotok-delien/hmk.delien.xyz`（`public/monitorianneo/`）
+- デザインの基準: doc-hub の `docs/` 配下にある共通カラースキーム
+- フォント生成: doc-hub の `tools/build_fonts.py`

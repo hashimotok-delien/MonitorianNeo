@@ -4,7 +4,7 @@
  * テーマはプランページと共通の plans/css/style.css を流用する。
  *
  * 注意: 文面は必ず自サービスに合わせて書き直すこと（テンプレートのまま公開しない）。
- *       有料プランを提供する場合は、特定商取引法に基づく表記も別途用意する。
+ *       本サービスは無料配布。将来有料化する場合は特定商取引法に基づく表記も別途用意する。
  */
 require __DIR__ . '/assets/include/config.php';
 ?>
@@ -105,7 +105,7 @@ require __DIR__ . '/assets/include/config.php';
 </head>
 <body>
 
-  <?php $BASE = '.'; $LOGO_LABEL = 'Bot'; ?>
+  <?php $BASE = '.'; $LOGO_LABEL = 'Mixer'; ?>
   <?php include __DIR__ . '/assets/include/header.php'; ?>
 
   <main>
@@ -127,7 +127,7 @@ require __DIR__ . '/assets/include/config.php';
           <li><a href="#art3">第3条（利用条件）</a></li>
           <li><a href="#art4">第4条（本サービスの内容）</a></li>
           <li><a href="#art5">第5条（禁止事項）</a></li>
-          <li><a href="#art6">第6条（有料プラン）</a></li>
+          <li><a href="#art6">第6条（料金）</a></li>
           <li><a href="#art7">第7条（データの取扱い）</a></li>
           <li><a href="#art8">第8条（免責事項）</a></li>
           <li><a href="#art9">第9条（本規約の変更）</a></li>

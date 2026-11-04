@@ -4,7 +4,7 @@
  *
  * 呼び出し側で事前に定義できる変数:
  *   $BASE        … 商品ルートへの相対パス（直下は '.'、plans/ は '..'）
- *   $LOGO_LABEL  … ロゴ横のラベル（'Bot' / 'Premium' など）
+ *   $LOGO_LABEL  … ロゴ横のラベル（'Mixer' など）
  *
  * スタイルは各ページが plans/css/style.css を読み込む前提。
  */

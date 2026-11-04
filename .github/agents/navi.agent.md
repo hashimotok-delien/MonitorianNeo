@@ -64,3 +64,31 @@ user-invocable: true
 - **改善提案**: 現状の課題 → 提案内容 → 期待される効果 の形式で明確に説明する
 - **リファクタリング**: 振る舞いを変更せず、可読性・保守性を高める変更を優先する
 - **データベース設計**: 正規化を基本としつつ、パフォーマンス要件に応じてバランスを取る
+
+## リポジトリ構成メモ
+
+```
+Monitorian/                      … リポジトリルート（Monitorian の fork）
+├── MonitorianNeo/               … アプリ本体（旧 Source/）
+│   ├── Monitorian.sln
+│   ├── Monitorian/              … WPF アプリ（.NET Framework 4.8・旧形式 csproj）
+│   ├── Monitorian.Core/         … 共通ロジック／View・ViewModel
+│   ├── ScreenFrame/             … WPF コントロール群
+│   ├── StartupAgency/           … スタートアップ登録
+│   ├── Monitorian.Test/         … テスト（MSTest）
+│   ├── IconImage/               … アイコン生成ツール
+│   └── Installer/               … WiX 5 インストーラ
+├── web/public/monitorianneo/    … 公式サイト（PHP・doc-hub へ自動同期）
+├── .github/workflows/           … release.yml（リリース）, copy_web.yml（web 同期）
+├── docs/                        … コマンド仕様・コントリビュートガイド
+└── CHANGELOG.md                 … アプリ内「更新情報」が読む（Keep a Changelog）
+```
+
+### 覚えておくこと
+
+- `MonitorianNeo/` 配下のプロジェクト名・名前空間・アセンブリ名はまだ `Monitorian` のまま。
+  実行ファイルは `Monitorian.exe`。一方 `CHANGELOG.md` と `web/` は `MonitorianNeo.exe` 前提で書かれている。
+- `web/public/monitorianneo/assets/include/config.php` に商品名・URL・アクセント色が集約されている。
+  web の文言を触る前に必ずここを確認する。
+- `copy_web.yml` は**リポジトリ名を小文字化したフォルダ**（`public/<repo>`）へ同期する。
+  フォルダ名が `monitorianneo` なので、リポジトリ名は `MonitorianNeo` でなければ同期されない。

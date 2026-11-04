@@ -1,6 +1,6 @@
 # Changelog
 
-PulseWeaver の変更履歴です。書式は [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) に沿っています。
+MonitorianNeo の変更履歴です。書式は [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) に沿っています。
 アプリの「設定 > 更新情報」はこのファイルを読み取り、各リリースの変更内容を表示します。
 
 ## [0.1.11] - 2026-11-04
@@ -36,7 +36,7 @@ PulseWeaver の変更履歴です。書式は [Keep a Changelog](https://keepach
 
 ### 修正
 
-- バックグラウンドで動作中に `PulseWeaver.exe` を起動すると二重に起動してしまう問題を修正。既に起動している場合は新しいプロセスを終了し、動作中の画面を前面に表示するように変更
+- バックグラウンドで動作中に `MonitorianNeo.exe` を起動すると二重に起動してしまう問題を修正。既に起動している場合は新しいプロセスを終了し、動作中の画面を前面に表示するように変更
 
 ### 変更
 
@@ -62,7 +62,7 @@ PulseWeaver の変更履歴です。書式は [Keep a Changelog](https://keepach
 
 ### 追加
 
-- アプリ内アップデートでインストールが完了すると、PulseWeaver が自動で起動し直すように変更
+- アプリ内アップデートでインストールが完了すると、MonitorianNeo が自動で起動し直すように変更
 
 ## [0.1.7] - 2026-10-27
 

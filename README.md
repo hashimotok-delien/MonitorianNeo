@@ -300,11 +300,11 @@ In any case, reporting on the controllability of a monitor MUST include probe.lo
 
 3. In Visual Studio, open Extension Manager and make sure **HeatWave for VS2022** is installed.
 
-4. Load the solution by specifying `/Source/Monitorian.sln`. Then go to the solution explorer and right click the solution name and execute `Restore NuGet Packages`.
+4. Load the solution by specifying `/MonitorianNeo/Monitorian.sln`. Then go to the solution explorer and right click the solution name and execute `Restore NuGet Packages`.
 
 ### Globalization
 
-An alternative language can be shown by adding a Resources (.resx) file into `/Source/Monitorian.Core/Properties` folder. Each Resources file stores name/value pairs for a specific language and will be selected automatically depending on the user's environment.
+An alternative language can be shown by adding a Resources (.resx) file into `/MonitorianNeo/Monitorian.Core/Properties` folder. Each Resources file stores name/value pairs for a specific language and will be selected automatically depending on the user's environment.
 
  - The file name must be in `Resources.[language-culture].resx` format.
  - The name of a name/value pair must correspond to that in the default `Resources.resx` file to override it.
