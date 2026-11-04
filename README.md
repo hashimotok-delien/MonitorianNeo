@@ -1,6 +1,7 @@
-﻿# Monitorian
+﻿# MonitorianNeo
 
-Monitorian is a Windows desktop tool to adjust the brightness of multiple monitors with ease.
+MonitorianNeo is a Windows desktop tool to adjust the brightness of multiple monitors with ease.
+It is a fork of [Monitorian](https://github.com/emoacht/Monitorian) by emoacht.
 
 <img src="Images/Screenshot_main.png" alt="Screenshot" width="487.5"><br>
 (DPI: 200%)
@@ -52,29 +53,20 @@ Additional languages:
 
 ## Download
 
- * Microsoft Store (Windows 10 (1607) or newer):<br>
-   [Monitorian](https://www.microsoft.com/store/apps/9nw33j738bl0)<br>
-   <a href='//www.microsoft.com/store/apps/9nw33j738bl0?cid=storebadge&ocid=badge'><img src='https://developer.microsoft.com/store/badges/images/English_get-it-from-MS.png' alt='Monitorian' width='142px' height='52px'/></a>
+Releases are distributed from GitHub:
 
- * Winget (a.k.a. [Windows Package Manager](https://docs.microsoft.com/en-us/windows/package-manager), App Installer):
-   ```
-   winget install Monitorian -s msstore
-   ```
-
- * Other:<br>
-:floppy_disk: [Installer](https://github.com/emoacht/Monitorian/releases/download/4.16.9-Installer/MonitorianInstaller4169.zip)
+ * Installer (`MonitorianNeo-<version>-setup.exe`) and portable ZIP:<br>
+   [Releases](https://github.com/hashimotok-delien/MonitorianNeo/releases)
 
 ## Install/Uninstall
 
-If you wish to place executable files on your own, you can extract them from installer file (.msi) by the following command:
+Run the installer and follow the wizard. The installation folder can be changed and administrator rights are not required.
 
-```
-msiexec /a [source msi file path] targetdir=[destination folder path (absolute path)] /qn
-```
+If you wish to place executable files on your own, extract `MonitorianNeo-win-x64.zip` and run `MonitorianNeo.exe`.
 
 In such case, please note the following:
 
- - The settings file (and other file) will be created at: `[system drive]\Users\[user name]\AppData\Local\Monitorian\`
+ - The settings file (and other file) will be created at: `[system drive]\Users\[user name]\AppData\Local\MonitorianNeo\`
  - When you check [Start on sign in], a registry value will be added to: `HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run`
 
 ## Remarks
@@ -87,7 +79,7 @@ In such case, please note the following:
 
 ## Add-on Features
 
-Add-on features are available for Microsoft Store version on a subscription basis.
+Features which are add-ons in the Microsoft Store version of the original Monitorian are included in MonitorianNeo without any subscription.
 
 ### Hot keys & Shortcut keys (Add-on features)
 
@@ -116,12 +108,12 @@ The available options for brightness are as follows:
 
  - The brightness ranges from 0 to 100%. When you use `/set` option, it can be specified with the number itself (e.g. 20), increase (e.g. +10) or decrease (e.g. -10).
 
- - This app can be called by its name `Monitorian` in command prompt, bat file or desktop shortcut.
+ - This app can be called by its name `MonitorianNeo` in command prompt, bat file or desktop shortcut.
 
 For example, you can get brightness of a specific monitor as shown below.
 
 ```
-monitorian /get [Device Instance ID of monitor enclosed in quotes]
+MonitorianNeo /get [Device Instance ID of monitor enclosed in quotes]
 ```
 
 If this app is called with `/get` or `/set`, it will return
@@ -136,7 +128,7 @@ Similarly, you can create a desktop shortcut to set brightness of a monitor to 5
 
 ![Shortcut](Images/Shortcut_set.png)
 
-From Task Scheduler, it can be performed by the path to its alias `%LOCALAPPDATA%\Microsoft\WindowsApps\Monitorian.exe`. For example, to increase brightness of all monitors by 30%, the Action will be the following:
+From Task Scheduler, it can be performed by the path to the executable `[installation folder]\MonitorianNeo.exe`. For example, to increase brightness of all monitors by 30%, the Action will be the following:
 
 ![Task Scheduler](Images/TaskScheduler_action.png)
 
@@ -145,7 +137,7 @@ From Task Scheduler, it can be performed by the path to its alias `%LOCALAPPDATA
 The usage for contrast is almost same as brightness. You just need to insert `contrast` sub-option immediately after `/get` or `/set` as shown below.
 
 ```
-monitorian /get contrast [Device Instance ID of monitor enclosed in quotes]
+MonitorianNeo /get contrast [Device Instance ID of monitor enclosed in quotes]
 ```
 
 If this app is called with `/get contrast` or `/set contrast`, it will return
@@ -159,7 +151,7 @@ If this app is called with `/get contrast` or `/set contrast`, it will return
 As the options can be executed consecutively (up to 10 options), you can set brightness and contrast of a monitor at once.
 
 ```
-monitorian /set 20 /set contrast 40
+MonitorianNeo /set 20 /set contrast 40
 ```
 
 #### Color Temperature Preset
@@ -185,7 +177,7 @@ The monitor vendors may display these values using different names (e.g., 'warm'
 The usage is same as brightness except the valid values and `all` sub-option. To get the valid values for a specific model, you can use `/get` with `color` sub-option as shown below.
 
 ```
-monitorian /get color [Device Instance ID of monitor enclosed in quotes]
+MonitorianNeo /get color [Device Instance ID of monitor enclosed in quotes]
 ```
 
 If this app is called with `/get color` or `/set color`, it will return
@@ -210,7 +202,7 @@ Like color temperature preset, input source can be set only to pre-defined value
 The usage is same as brightness except the valid values and `all` sub-option. To get the valid values for a specific model, you can use `/get` with `input` sub-option as shown below.
 
 ```
-monitorian /get input [Device Instance ID of monitor enclosed in quotes]
+MonitorianNeo /get input [Device Instance ID of monitor enclosed in quotes]
 ```
 
 If this app is called with `/get input` or `/set input`, it will return
@@ -225,9 +217,9 @@ The valid values will be listed in parentheses. As the values for USB-C and Thun
 
 In addition, you can customize flexible and versatile commands for specific needs:
 
- - [Conditional Commands](https://github.com/emoacht/Monitorian/blob/master/docs/COMMANDS.md#conditional-commands) - To be executed when a specified condition is met
- - [Time Commands](https://github.com/emoacht/Monitorian/blob/master/docs/COMMANDS.md#time-commands) - To be executed when a specified daily due time comes
- - [Key Commands](https://github.com/emoacht/Monitorian/blob/master/docs/COMMANDS.md#key-commands) - To be executed a specified hot key is pressed
+ - [Conditional Commands](https://github.com/hashimotok-delien/MonitorianNeo/blob/master/docs/COMMANDS.md#conditional-commands) - To be executed when a specified condition is met
+ - [Time Commands](https://github.com/hashimotok-delien/MonitorianNeo/blob/master/docs/COMMANDS.md#time-commands) - To be executed when a specified daily due time comes
+ - [Key Commands](https://github.com/hashimotok-delien/MonitorianNeo/blob/master/docs/COMMANDS.md#key-commands) - To be executed a specified hot key is pressed
 
 The code for add-on features is not included in this repository.
 
@@ -255,7 +247,7 @@ If you think it is worth to report, read [reporting](#reporting) and then create
 
 ## Development
 
-To begin with, please read [contributing guidelines](https://github.com/emoacht/Monitorian/blob/master/docs/CONTRIBUTING.md).
+To begin with, please read [contributing guidelines](https://github.com/hashimotok-delien/MonitorianNeo/blob/master/docs/CONTRIBUTING.md).
 
 This app is a WPF app developed and tested with Surface Pro series.
 

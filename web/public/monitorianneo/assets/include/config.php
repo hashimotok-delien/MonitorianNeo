@@ -14,13 +14,13 @@
 $PRODUCT_NAME = 'MonitorianNeo';
 
 // ロゴ横に出す絵文字（不要なら ''）
-$PRODUCT_EMOJI = '🎚️';
+$PRODUCT_EMOJI = '🖥️';
 
 // 公式サイトのフォルダ名。ランディングのページ遷移アニメの判定に使う
 $PRODUCT_SLUG = 'monitorianneo';
 
 // ヘッダーロゴのラベル（Mixer など）。各ページで上書き可
-$LOGO_LABEL ??= 'Mixer';
+$LOGO_LABEL ??= 'Brightness';
 
 // ドキュメントサイト（README・使い方）
 $DOCS_URL = 'https://github.com/hashimotok-delien/MonitorianNeo#readme';

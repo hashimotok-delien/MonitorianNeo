@@ -86,9 +86,12 @@ Monitorian/                      … リポジトリルート（Monitorian の f
 
 ### 覚えておくこと
 
-- `MonitorianNeo/` 配下のプロジェクト名・名前空間・アセンブリ名はまだ `Monitorian` のまま。
-  実行ファイルは `Monitorian.exe`。一方 `CHANGELOG.md` と `web/` は `MonitorianNeo.exe` 前提で書かれている。
+- プロジェクトのフォルダ名と名前空間は `Monitorian` / `Monitorian.Core` のまま（フォーク元との差分を小さく保つため）。
+  アセンブリ名は `MonitorianNeo` / `MonitorianNeo.Core`、実行ファイルは `MonitorianNeo.exe`。
 - `web/public/monitorianneo/assets/include/config.php` に商品名・URL・アクセント色が集約されている。
   web の文言を触る前に必ずここを確認する。
 - `copy_web.yml` は**リポジトリ名を小文字化したフォルダ**（`public/<repo>`）へ同期する。
   フォルダ名が `monitorianneo` なので、リポジトリ名は `MonitorianNeo` でなければ同期されない。
+- `release.yml` は .NET Framework 4.8 の WPF アプリとして **MSBuild + WiX** でビルドする
+  （`dotnet publish` は使わない）。成果物は `.msi` とポータブル ZIP。
+- フォーク元の Monitorian は MIT ライセンス。`LICENSE.txt` の著作権表示とクレジット表記を消さない。

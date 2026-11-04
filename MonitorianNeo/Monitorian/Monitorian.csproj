@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Monitorian</RootNamespace>
-    <AssemblyName>Monitorian</AssemblyName>
+    <AssemblyName>MonitorianNeo</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <FileAlignment>512</FileAlignment>
@@ -99,7 +99,7 @@
     <EmbeddedResource Include="Resources\License.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Monitorian.VisualElementsManifest.xml">
+    <None Include="MonitorianNeo.VisualElementsManifest.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

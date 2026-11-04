@@ -1,6 +1,6 @@
 ﻿## Commands by Command-line Options
 
-Commands are one of command-line options available as add-on features of Microsoft Store version.
+Commands are one of command-line options of MonitorianNeo.
 
 - [Conditional Commands](#conditional-commands)
 - [Time Commands](#time-commands)
@@ -487,7 +487,7 @@ To enable conditional/time/key commands, create a command file, which is a JSON 
 Then load the JSON file using the `/load` option.
 
 ```
-monitorian /load [file path of JSON file enclosed in quotes]
+MonitorianNeo /load [file path of JSON file enclosed in quotes]
 ```
 Loading new commands replaces all previously loaded commands.
 
@@ -499,7 +499,7 @@ After loading, you can browse the commands in Command Settings, accessible from 
 To access Command Settings without loading a specific command file, use `/load` with `any` sub-option.
 
 ```
-monitorian /load any
+MonitorianNeo /load any
 ```
 
 The rules for command file path are:
@@ -511,5 +511,5 @@ The rules for command file path are:
 To disable all loaded commands, use `/unload` option.
 
 ```
-monitorian /unload
+MonitorianNeo /unload
 ```

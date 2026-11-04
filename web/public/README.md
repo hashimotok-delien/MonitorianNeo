@@ -1,6 +1,6 @@
 # MonitorianNeo 公式サイト（`web/public/monitorianneo/`）
 
-仮想オーディオミキサー **MonitorianNeo** の商品ページ一式です。
+モニターの明るさとコントラストを調整する **MonitorianNeo** の商品ページ一式です。
 `web/public/**` への push を契機に `.github/workflows/copy_web.yml` が
 `hashimotok-delien/hmk.delien.xyz` の `public/monitorianneo/` へ同期します。
 
@@ -24,7 +24,7 @@ web/public/monitorianneo/
     │   ├── config.php         … 商品名・URL・著作権表記などの一元管理
     │   ├── header.php         … 共通ヘッダー
     │   └── footer.php         … 共通フッター
-    └── img/                   … アイコン・スクリーンショット（webp / png の複数サイズ）
+    └── img/                   … アイコン・スクリーンショット（webp / png）
 ```
 
 | ページ | URL | スタイル |
@@ -74,8 +74,8 @@ web/public/monitorianneo/
 
 ```
 assets/img/icon.webp          … ヒーローのアイコン（120px 表示 / 400px 程度を用意）
-assets/img/screenshot-1.webp  … 使用イメージ
-assets/img/screenshot-2.webp
+assets/img/screenshot-1.png   … 使用イメージ（メイン画面）
+assets/img/screenshot-2.png   … 使用イメージ（一括調整）
 ```
 
 Gyazo などの外部URLを直接貼るのは避けてください（リンク切れ・外部依存・表示遅延の原因）。

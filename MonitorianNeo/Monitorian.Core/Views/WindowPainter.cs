@@ -117,7 +117,7 @@ public class WindowPainter : ScreenFrame.Painter.WindowPainter
 	public IReadOnlyList<(string darkThemeUriString, string lightThemeUriString)> ThemeSets => _themeSets.ToArray();
 	private readonly List<(string darkThemeUriString, string lightThemeUriString)> _themeSets =
 	[
-		(null, @"/Monitorian.Core;component/Views/Themes/LightTheme.xaml")
+		(null, @"/MonitorianNeo.Core;component/Views/Themes/LightTheme.xaml")
 	];
 
 	public void AddThemeSet(string darkThemeUriString, string lightThemeUriString) =>
@@ -150,8 +150,8 @@ public class WindowPainter : ScreenFrame.Painter.WindowPainter
 	{
 		return Theme switch
 		{
-			ColorTheme.Light => "pack://application:,,,/Monitorian.Core;component/Resources/Icons/LightTrayIcon.ico",
-			ColorTheme.Dark or _ => "pack://application:,,,/Monitorian.Core;component/Resources/Icons/DarkTrayIcon.ico",
+			ColorTheme.Light => "pack://application:,,,/MonitorianNeo.Core;component/Resources/Icons/LightTrayIcon.ico",
+			ColorTheme.Dark or _ => "pack://application:,,,/MonitorianNeo.Core;component/Resources/Icons/DarkTrayIcon.ico",
 		};
 	}
 

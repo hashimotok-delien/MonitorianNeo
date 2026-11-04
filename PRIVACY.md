@@ -1,5 +1,7 @@
 ﻿## Privacy Policy
 
-This application, Monitorian, does not collect personal information.
+This application, MonitorianNeo, does not collect personal information.
 
-Note: This notice is required by Microsoft Store because this application declares full trust capability, regardless of its actual functions. That capability is the requirement of Desktop Bridge for being distributed through the Store.
+Settings are stored only on your own device (under `%LOCALAPPDATA%\MonitorianNeo`). The application does not send any data to the author.
+
+MonitorianNeo is distributed from GitHub Releases and is not published on the Microsoft Store.

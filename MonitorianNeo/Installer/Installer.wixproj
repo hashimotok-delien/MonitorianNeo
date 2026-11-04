@@ -1,6 +1,7 @@
 <Project Sdk="WixToolset.Sdk/5.0.2">
   <PropertyGroup>
-    <OutputName>Monitorian.Installer</OutputName>
+    <OutputName>MonitorianNeo.Installer</OutputName>
+    <ProductVersion Condition=" '$(ProductVersion)' == '' ">0.1.0</ProductVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DefineConstants>Debug</DefineConstants>
@@ -10,6 +11,10 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <SuppressValidation>False</SuppressValidation>
     <SuppressIces>ICE69</SuppressIces>
+  </PropertyGroup>
+  <!-- Product.wxs へ $(var.ProductVersion) として渡す（リリース時に -p:ProductVersion=x.y.z で上書き） -->
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);ProductVersion=$(ProductVersion)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Monitorian\Monitorian.csproj">

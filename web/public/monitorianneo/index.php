@@ -16,10 +16,10 @@ require __DIR__ . '/assets/include/config.php';
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= $PRODUCT_NAME ?> | <?= $SITE_OWNER ?></title>
-<meta name="description" content="Windows向けの無料オーディオミキサー。H/W入力6・バーチャル入力3をミックスし、4つの出力へ振り分け。DiscordやOBSへ音声を分けて届けられます。">
+<meta name="description" content="複数のモニターの明るさとコントラストを調整できる、Windows向けの無料ツール。個別にも一斉にも操作でき、外部モニターにも対応します。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="<?= $PRODUCT_NAME ?> | <?= $SITE_OWNER ?>">
-<meta property="og:description" content="9入力を4出力へ自由に振り分ける、Windows向けの無料オーディオミキサー。入力と出力それぞれの音量調整、構成の保存・切替、自動更新に対応。">
+<meta property="og:description" content="複数のモニターの明るさとコントラストを、個別にも一斉にも調整できる Windows 向けの無料ツール。外部モニターにも対応し、設定は自動で保存されます。">
 <meta property="og:image" content="https://hmk.delien.xyz/monitorianneo/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -333,8 +333,8 @@ h2{
     <img src="./assets/img/icon.png?v=<?= @filemtime(__DIR__ . '/assets/img/icon.png') ?: time() ?>" alt="<?= $PRODUCT_NAME ?> のアイコン" width="120" height="120" decoding="async">
   </picture>
   <h1><?= $PRODUCT_NAME ?></h1>
-  <div class="tagline">音を混ぜて、好きな場所へ。</div>
-  <div class="benefit">H/W入力6・バーチャル入力3・出力4。Windowsで動く無料のオーディオミキサーです。</div>
+  <div class="tagline">モニターの明るさを、まとめて手早く。</div>
+  <div class="benefit">複数のモニターの明るさとコントラストを、個別にも一斉にも調整できる Windows 向けの無料ツールです。</div>
   <a href="<?= $DOWNLOAD_URL ?>" class="btn" target="_blank" rel="noopener">ダウンロード</a>
 </header>
 
@@ -345,16 +345,16 @@ h2{
   <h2>💡 何ができる？</h2>
   <div class="grid">
     <div class="card">
-      <div class="category">マトリクスミックス</div>
-      <p>H/W入力6・バーチャル入力3の計9系統を、H/W出力A1〜A4へ自由に振り分け。入力ごとの音量、出力ごとの音量をそれぞれ個別に調整できます。</p>
+      <div class="category">一括・個別の調整</div>
+      <p>接続されているモニターの明るさを、1台ずつ個別にも、まとめて一斉にも調整できます。同じ画面からコントラストや色温度のプリセット、入力切替も扱えます。</p>
     </div>
     <div class="card">
-      <div class="category">バーチャル入力</div>
-      <p>Windowsの既定出力やDiscordの出力など、指定した再生デバイスに流れている音をループバックで取り込みます。アプリごとに再生先を分ければ、ゲームと通話を別々にミックスできます。</p>
+      <div class="category">外部モニターにも対応</div>
+      <p>DDC/CI に対応した外付けモニターの明るさを直接操作できます。ノート PC の内蔵ディスプレイと同じ画面に並べて扱えます。</p>
     </div>
     <div class="card">
-      <div class="category">自動化と構成</div>
-      <p>起動時の自動ミックス、Windows起動時の自動起動、タスクトレイ常駐に対応。用途別の構成をJSONで保存でき、選ぶだけで即時に切り替わります。</p>
+      <div class="category">常駐してすぐ呼び出せる</div>
+      <p>タスクトレイに常駐し、Windows 起動時の自動起動にも対応。ホットキーやコマンドラインからも明るさとコントラストを変更できます。</p>
     </div>
   </div>
 </section>
@@ -363,10 +363,10 @@ h2{
 <section>
   <h2>🚀 なぜ使う？</h2>
   <div class="grid">
-    <div class="card">🔊 <strong>複数の出力へ同時配信</strong><br>監視用ヘッドホンと配信用ケーブルを分けたまま、同じ音を同時に出せます。</div>
-    <div class="card">⚡ <strong>動作中に調整できる</strong><br>音量と A1〜A4 の振り分けはミックス中でも即時反映。止め直す必要はありません。</div>
-    <div class="card">💾 <strong>構成をすぐ切り替え</strong><br>「ゲーム配信」「Discord通話」などの構成を保存し、一覧から選ぶだけで切替できます。</div>
-    <div class="card">🔄 <strong>無料・自動更新</strong><br>追加のランタイム不要。24時間に1回アップデートを確認し、アプリからそのまま更新できます。</div>
+    <div class="card">� <strong>一括で合わせられる</strong><br>「すべてのモニター」を選べば、明るさをまとめて変更できます。</div>
+    <div class="card">⌨ <strong>キーボード・コマンドから操作</strong><br>ホットキーやコマンドラインからも明るさとコントラストを変更できます。</div>
+    <div class="card">💾 <strong>設定は自動保存</strong><br>前回終了時の状態を覚えており、次回起動時からそのまま使えます。</div>
+    <div class="card">💡 <strong>モニターに名前を付けられる</strong><br>複数台あっても見分けられるよう、表示名を自由に変更できます。</div>
   </div>
 </section>
 
@@ -374,7 +374,7 @@ h2{
 <section>
   <h2>📥 導入方法</h2>
   <div class="card">
-    <p>リリースページからインストーラー（またはポータブルZIP）をダウンロードして実行するだけ。Discordなどへ音声を送る場合は、VB-CABLE などの仮想オーディオデバイスを別途用意してください。</p>
+    <p>リリースページからインストーラー（またはポータブルZIP）をダウンロードして実行するだけ。インストール先は変更でき、管理者権限も不要です。外付けモニターは DDC/CI が有効になっている必要があります。</p>
     <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;">
       <a href="<?= $DOWNLOAD_URL ?>" class="btn" target="_blank" rel="noopener">⬇ リリースを開く</a>
       <a href="<?= $DOCS_URL ?>" class="btn" style="background:linear-gradient(45deg,#7c4dff,var(--accent));" target="_blank" rel="noopener">📚 使い方を見る</a>
@@ -389,31 +389,17 @@ h2{
   <h2>🖼 使用イメージ</h2>
 
   <div class="card">
-    <p><strong>ミキサー画面</strong>：上からH/W入力6・バーチャル入力3・H/W出力4。行ごとにデバイスと音量、右端のA1〜A4で振り分けを指定します。</p>
-    <picture>
-      <source type="image/webp"
-              srcset="./assets/img/screenshot-1-600.webp?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-1-600.webp') ?: time() ?> 600w,
-                      ./assets/img/screenshot-1-900.webp?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-1-900.webp') ?: time() ?> 900w,
-                      ./assets/img/screenshot-1-1200.webp?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-1-1200.webp') ?: time() ?> 1200w"
-              sizes="(max-width: 1060px) calc(100vw - 90px), 900px">
-      <img src="./assets/img/png/screenshot-1.png?v=<?= @filemtime(__DIR__ . '/assets/img/png/screenshot-1.png') ?: time() ?>" alt="MonitorianNeo のミキサー画面。H/W入力・バーチャル入力・H/W出力の一覧と音量スライダーが並んでいる"
-           width="1200" height="980" loading="lazy" decoding="async"
-           style="width:100%; height:auto; border-radius:12px; box-shadow:0 0 20px rgba(var(--accent-rgb),0.3);">
-    </picture>
+    <p><strong>メイン画面</strong>：接続されているモニターが一覧表示され、スライダーで明るさを調整できます。上部の「すべてのモニター」を使えば一括で変更できます。</p>
+    <img src="./assets/img/screenshot-1.png?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-1.png') ?: time() ?>" alt="MonitorianNeo のメイン画面。複数のモニターの明るさを調整するスライダーが並んでいる"
+         loading="lazy" decoding="async"
+         style="width:100%; height:auto; border-radius:12px; box-shadow:0 0 20px rgba(var(--accent-rgb),0.3);">
   </div>
 
   <div class="card">
-    <p><strong>設定・更新情報</strong>：起動時の動作や出力バッファ、構成の保存・切替、アップデートの確認ができます。各リリースの変更内容もその場で確認できます。</p>
-    <picture>
-      <source type="image/webp"
-              srcset="./assets/img/screenshot-2-600.webp?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-2-600.webp') ?: time() ?> 600w,
-                      ./assets/img/screenshot-2-900.webp?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-2-900.webp') ?: time() ?> 900w,
-                      ./assets/img/screenshot-2-1200.webp?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-2-1200.webp') ?: time() ?> 1200w"
-              sizes="(max-width: 1060px) calc(100vw - 90px), 900px">
-      <img src="./assets/img/png/screenshot-2.png?v=<?= @filemtime(__DIR__ . '/assets/img/png/screenshot-2.png') ?: time() ?>" alt="MonitorianNeo の設定画面。一般・音声・構成・更新情報・このアプリについてのメニューがある"
-           width="1200" height="980" loading="lazy" decoding="async"
-           style="width:100%; height:auto; border-radius:12px; box-shadow:0 0 20px rgba(var(--accent-rgb),0.3);">
-    </picture>
+    <p><strong>一括調整</strong>：「すべてのモニター」を選ぶと、接続されているモニターの明るさが揃います。個別の調整と行き来しながら、見やすい明るさに合わせられます。</p>
+    <img src="./assets/img/screenshot-2.png?v=<?= @filemtime(__DIR__ . '/assets/img/screenshot-2.png') ?: time() ?>" alt="MonitorianNeo で複数のモニターの明るさを一括調整している画面"
+         loading="lazy" decoding="async"
+         style="width:100%; height:auto; border-radius:12px; box-shadow:0 0 20px rgba(var(--accent-rgb),0.3);">
   </div>
 </section>
 
