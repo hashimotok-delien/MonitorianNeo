@@ -39,6 +39,75 @@ public class UpdateReleaseInfoTest
 		Assert.AreEqual(new System.Version(0, 1, 0), ReleaseInfo.Normalize(new System.Version(0, 1)));
 	}
 
+	[TestMethod]
+	[DataRow("v0.1.3", 0, 1, 3, null)]
+	[DataRow("0.2.0-rc.1", 0, 2, 0, "rc.1")]
+	[DataRow("V1.2.10-beta", 1, 2, 10, "beta")]
+	[DataRow("4.16.9-Installer", 4, 16, 9, "Installer")]
+	public void TestTryParseTag(string text, int major, int minor, int build, string preRelease)
+	{
+		var success = ReleaseInfo.TryParseTag(text, out var version, out var actualPreRelease);
+
+		Assert.IsTrue(success);
+		Assert.AreEqual(new System.Version(major, minor, build), version);
+		Assert.AreEqual(preRelease, actualPreRelease);
+	}
+
+	private static ReleaseInfo CreateRelease(string tagName, bool prerelease)
+	{
+		using var document = JsonDocument.Parse($$"""
+			{ "tag_name": "{{tagName}}", "prerelease": {{(prerelease ? "true" : "false")}}, "assets": [] }
+			""");
+
+		Assert.IsTrue(ReleaseInfo.TryParse(document.RootElement, out var release));
+		return release;
+	}
+
+	[TestMethod]
+	public void TestCompare_PrereleaseIsOlderThanStable()
+	{
+		var stable = CreateRelease("v0.1.3", false);
+		var rc = CreateRelease("v0.1.3-rc.1", true);
+
+		Assert.IsTrue(ReleaseInfo.Compare(rc, stable) < 0);
+		Assert.IsTrue(ReleaseInfo.Compare(stable, rc) > 0);
+		Assert.AreEqual(0, ReleaseInfo.Compare(stable, CreateRelease("0.1.3", false)));
+	}
+
+	[TestMethod]
+	public void TestCompare_PrereleaseOrdering()
+	{
+		var alpha = CreateRelease("v0.1.3-alpha", true);
+		var beta = CreateRelease("v0.1.3-beta", true);
+		var rc1 = CreateRelease("v0.1.3-rc.1", true);
+		var rc2 = CreateRelease("v0.1.3-rc.2", true);
+		var numeric = CreateRelease("v0.1.3-1", true);
+
+		Assert.IsTrue(ReleaseInfo.Compare(alpha, beta) < 0);
+		Assert.IsTrue(ReleaseInfo.Compare(beta, rc1) < 0);
+		Assert.IsTrue(ReleaseInfo.Compare(rc1, rc2) < 0);
+		Assert.IsTrue(ReleaseInfo.Compare(numeric, alpha) < 0); // numeric < alphanumeric
+	}
+
+	[TestMethod]
+	public void TestCompare_NewerPreleaseOfHigherVersionWins()
+	{
+		var current = CreateRelease("v0.1.2", false);
+		var nextPre = CreateRelease("v0.1.3-rc.1", true);
+
+		Assert.IsTrue(ReleaseInfo.Compare(nextPre, current) > 0);
+	}
+
+	[TestMethod]
+	public void TestTryParse_PrereleaseIsDetected()
+	{
+		var release = CreateRelease("v0.1.3-rc.1", true);
+
+		Assert.IsTrue(release.IsPrerelease);
+		Assert.AreEqual("rc.1", release.PreRelease);
+		Assert.AreEqual("0.1.3-rc.1", release.DisplayVersion);
+	}
+
 	private const string SampleJson = """
 		{
 		  "tag_name": "v0.1.3",

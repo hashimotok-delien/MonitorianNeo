@@ -99,8 +99,9 @@ Monitorian/                      … リポジトリルート（Monitorian の f
 - アイコンの正は `web/public/monitorianneo/assets/img/icon.png`。
   `tools/make-icons.ps1`（AppIcon / トレイアイコン）と `tools/make-og.ps1`（OGP 画像）で再生成する。
   トレイアイコンは `System.Drawing.Icon` で読むため、小さいサイズは DIB(BMP) 形式で書き出す必要がある。
-- 更新確認は `Monitorian.Core/Models/Updates/UpdateService.cs`。GitHub の `releases/latest` を見て、
-  404（prerelease しか無い場合を含む）なら `releases?per_page=20` にフォールバックする。
+- 更新確認は `Monitorian.Core/Models/Updates/UpdateService.cs`。GitHub の `releases?per_page=20` を取得し、
+  非 draft のうち `ReleaseInfo.Compare`（SemVer 準拠・プレリリース対応）で最大のものを選ぶ。
+  `/releases/latest` は使わない（プレリリースしか無いリポジトリで 404 になるため）。
   配布物は `MonitorianNeo-<ver>-setup.exe` と `SHA256SUMS.txt` を名前で拾い、DL 後に SHA-256 を検証する。
   自動更新は Inno Setup の `/VERYSILENT /CLOSEAPPLICATIONS` で行い、アプリは自分で終了する。
 - フォーク元の Monitorian は MIT ライセンス。`LICENSE.txt` の著作権表示とクレジット表記を消さない。

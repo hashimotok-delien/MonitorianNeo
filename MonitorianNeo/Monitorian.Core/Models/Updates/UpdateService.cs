@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -53,7 +54,7 @@ public class UpdateService : INotifyPropertyChanged, IDisposable
 	private const string RepositoryOwner = "hashimotok-delien";
 	private const string RepositoryName = "MonitorianNeo";
 
-	private static readonly Uri LatestReleaseUri = new($"https://api.github.com/repos/{RepositoryOwner}/{RepositoryName}/releases/latest");
+	// Pre-releases are included so that a pre-release can also be installed.
 	private static readonly Uri ReleasesUri = new($"https://api.github.com/repos/{RepositoryOwner}/{RepositoryName}/releases?per_page=20");
 
 	// The uninstall key that Inno Setup creates for this product.
@@ -147,7 +148,13 @@ public class UpdateService : INotifyPropertyChanged, IDisposable
 			State = UpdateState.Checking;
 			Latest = null;
 
-			var release = await FetchLatestReleaseAsync(cancellationToken);
+			var (success, release) = await FetchLatestReleaseAsync(cancellationToken);
+			if (!success)
+			{
+				State = UpdateState.Failed;
+				return false;
+			}
+
 			if (release is null)
 			{
 				Debug.WriteLine("No release with a valid version was found.");
@@ -155,11 +162,11 @@ public class UpdateService : INotifyPropertyChanged, IDisposable
 				return false;
 			}
 
-			if (release.Version > CurrentVersion)
+			if (IsNewer(release))
 			{
 				Latest = release;
 				State = UpdateState.Available;
-				OperationRecorder.Record($"Update available: v{release.DisplayVersion}");
+				OperationRecorder.Record($"Update available: {release.DisplayVersion}");
 				return true;
 			}
 
@@ -185,57 +192,50 @@ public class UpdateService : INotifyPropertyChanged, IDisposable
 	}
 
 	/// <summary>
-	/// Fetches the latest release. Falls back to the list of releases when only pre-releases exist.
+	/// Fetches the newest release including pre-releases.
 	/// </summary>
-	private async Task<ReleaseInfo> FetchLatestReleaseAsync(CancellationToken cancellationToken)
+	/// <returns>success: False if the request failed. release: Null if no release exists.</returns>
+	private async Task<(bool success, ReleaseInfo release)> FetchLatestReleaseAsync(CancellationToken cancellationToken)
 	{
-		using (var response = await _client.GetAsync(LatestReleaseUri, cancellationToken))
+		using var response = await _client.GetAsync(ReleasesUri, cancellationToken);
+		if (!response.IsSuccessStatusCode)
 		{
-			if (response.IsSuccessStatusCode)
-			{
-				await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-				using var document = await JsonDocument.ParseAsync(stream, cancellationToken: cancellationToken);
-
-				if (ReleaseInfo.TryParse(document.RootElement, out var release))
-					return release;
-
-				Debug.WriteLine("Failed to parse the latest release.");
-				return null;
-			}
-
-			// GitHub returns 404 when no published (non pre-release) release exists.
-			if (response.StatusCode is not System.Net.HttpStatusCode.NotFound)
-			{
-				Debug.WriteLine($"Failed to check the latest release. Status: {(int)response.StatusCode}");
-				return null;
-			}
+			Debug.WriteLine($"Failed to get releases. Status: {(int)response.StatusCode}");
+			return (false, null);
 		}
 
-		using var listResponse = await _client.GetAsync(ReleasesUri, cancellationToken);
-		if (!listResponse.IsSuccessStatusCode)
-		{
-			Debug.WriteLine($"Failed to get releases. Status: {(int)listResponse.StatusCode}");
-			return null;
-		}
+		await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+		using var document = await JsonDocument.ParseAsync(stream, cancellationToken: cancellationToken);
 
-		await using var listStream = await listResponse.Content.ReadAsStreamAsync(cancellationToken);
-		using var listDocument = await JsonDocument.ParseAsync(listStream, cancellationToken: cancellationToken);
+		if (document.RootElement.ValueKind is not JsonValueKind.Array)
+			return (false, null);
 
-		var candidates = listDocument.RootElement
+		// Drafts are excluded by ReleaseInfo.TryParse.
+		var release = document.RootElement
 			.EnumerateArray()
-			.Select(x => ReleaseInfo.TryParse(x, out var r) ? r : null)
+			.Select(x => ReleaseInfo.TryParse(x, out var parsed) ? parsed : null)
 			.Where(x => x is not null)
-			.OrderByDescending(x => x.Version)
-			.ToList();
+			.OrderByDescending(x => x, Comparer<ReleaseInfo>.Create(ReleaseInfo.Compare))
+			.FirstOrDefault();
 
-		// Prefer a stable release over a pre-release.
-		return candidates.FirstOrDefault(x => !x.IsPrerelease) ?? candidates.FirstOrDefault();
+		return (true, release);
 	}
 
 	/// <summary>
 	/// Current version of this application
 	/// </summary>
 	public static Version CurrentVersion => ReleaseInfo.Normalize(ProductInfo.Version);
+
+	/// <summary>
+	/// Whether the specified release is newer than the current version.
+	/// </summary>
+	/// <remarks>
+	/// The current version comes from the assembly version which has no pre-release label.
+	/// Therefore a pre-release of the same numeric version is not treated as newer
+	/// to avoid offering the same version repeatedly.
+	/// </remarks>
+	public static bool IsNewer(ReleaseInfo release) =>
+		(release is not null) && (release.Version > CurrentVersion);
 
 	/// <summary>
 	/// Downloads the installer of the specified release and verifies its checksum.
