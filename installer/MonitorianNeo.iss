@@ -4,12 +4,12 @@
 ;   dotnet publish MonitorianNeo\Monitorian\Monitorian.csproj -c Release -r win-x64 ^
 ;     --self-contained true -p:PublishSingleFile=true ^
 ;     -p:IncludeNativeLibrariesForSelfExtract=true -o dist\publish
-;   ISCC.exe /DAppVersion=0.1.0 installer\MonitorianNeo.iss
+;   ISCC.exe /DAppVersion=0.1.2 installer\MonitorianNeo.iss
 ;
 ; 出力: dist\MonitorianNeo-<version>-setup.exe
 
 #ifndef AppVersion
-  #define AppVersion "0.1.0"
+  #define AppVersion "0.1.2"
 #endif
 
 #define AppName "MonitorianNeo"
@@ -64,4 +64,4 @@ Filename: "{app}\{#AppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(
 
 [UninstallRun]
 ; アンインストール時に起動中のプロセスを終了させる
-Filename: "{sys}\taskkill.exe"; Parameters: "/F /IM {#AppExeName}"; Flags: runhidden skipifdoesntexist
+Filename: "{sys}\taskkill.exe"; Parameters: "/F /IM {#AppExeName}"; Flags: runhidden skipifdoesntexist; RunOnceId: "KillRunningApp"

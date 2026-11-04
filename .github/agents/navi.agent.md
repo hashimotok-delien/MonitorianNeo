@@ -96,4 +96,7 @@ Monitorian/                      … リポジトリルート（Monitorian の f
 - `release.yml` は .NET 8 の WPF アプリとして **`dotnet publish`（自己完結・単一ファイル）＋ Inno Setup** でビルドする。
   インストーラ定義は `installer/MonitorianNeo.iss`。成果物は `-setup.exe` とポータブル ZIP。
 - 動作要件は **Windows 10 1607 以降 / Windows 11（x64）**。Windows 7 / 8.1 は非対応。
+- アイコンの正は `web/public/monitorianneo/assets/img/icon.png`。
+  `tools/make-icons.ps1`（AppIcon / トレイアイコン）と `tools/make-og.ps1`（OGP 画像）で再生成する。
+  トレイアイコンは `System.Drawing.Icon` で読むため、小さいサイズは DIB(BMP) 形式で書き出す必要がある。
 - フォーク元の Monitorian は MIT ライセンス。`LICENSE.txt` の著作権表示とクレジット表記を消さない。

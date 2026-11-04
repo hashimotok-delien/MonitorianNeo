@@ -67,7 +67,7 @@ jobs:
             $version = $env:INPUT_VERSION -replace '^v', ''
           }
           else {
-            $version = '0.1.0'
+            $version = '0.1.2'
           }
 
           if ($version -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$') {

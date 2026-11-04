@@ -305,7 +305,7 @@ dotnet publish MonitorianNeo\Monitorian\Monitorian.csproj -c Release -r win-x64 
   --self-contained true -p:PublishSingleFile=true ^
   -p:IncludeNativeLibrariesForSelfExtract=true -o dist\publish
 
-ISCC.exe /DAppVersion=0.1.0 installer\MonitorianNeo.iss
+ISCC.exe /DAppVersion=0.1.2 installer\MonitorianNeo.iss
 ```
 
 ### Globalization
