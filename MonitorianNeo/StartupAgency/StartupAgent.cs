@@ -46,10 +46,29 @@ public class StartupAgent : IDisposable
 
 		_worker = (OsVersion.Is10Build14393OrGreater && IsPackaged)
 			? (IStartupWorker)new BridgeWorker(taskId: startupTaskId)
-			: (IStartupWorker)new RegistryWorker(name: name, path: Assembly.GetEntryAssembly().Location);
+			: (IStartupWorker)new RegistryWorker(name: name, path: GetExecutablePath());
 
 		_isHideExpected = standardArguments?.Contains(HideOption) is true;
 		return (success: true, null);
+	}
+
+	/// <summary>
+	/// Gets the path of the executable file of the current process.
+	/// </summary>
+	/// <remarks>
+	/// <see cref="Assembly.Location"/> of the entry assembly returns an empty string when the app
+	/// is published as a single file because the assembly is loaded from memory. In that case,
+	/// <see cref="Environment.ProcessPath"/>, which is the path of the apphost (.exe), is used.
+	/// </remarks>
+	private static string GetExecutablePath()
+	{
+		if (!string.IsNullOrWhiteSpace(Environment.ProcessPath))
+			return Environment.ProcessPath;
+
+		// 単一ファイル発行では空文字になるため、通常の配置向けのフォールバックとしてのみ使う。
+#pragma warning disable IL3000
+		return Assembly.GetEntryAssembly()?.Location;
+#pragma warning restore IL3000
 	}
 
 	#region IDisposable
