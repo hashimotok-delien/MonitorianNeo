@@ -21,4 +21,9 @@
     <PackageReference Include="System.Management" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- pack://application:,,,/MonitorianNeo.Core;component/Resources/Icons/... から参照する -->
+    <Resource Include="Resources\Icons\*.ico" />
+  </ItemGroup>
+
 </Project>
