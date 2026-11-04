@@ -71,13 +71,14 @@ user-invocable: true
 Monitorian/                      … リポジトリルート（Monitorian の fork）
 ├── MonitorianNeo/               … アプリ本体（旧 Source/）
 │   ├── Monitorian.sln
-│   ├── Monitorian/              … WPF アプリ（.NET Framework 4.8・旧形式 csproj）
+│   ├── Monitorian/              … WPF アプリ（.NET 8・SDK スタイル csproj）
 │   ├── Monitorian.Core/         … 共通ロジック／View・ViewModel
 │   ├── ScreenFrame/             … WPF コントロール群
 │   ├── StartupAgency/           … スタートアップ登録
 │   ├── Monitorian.Test/         … テスト（MSTest）
 │   ├── IconImage/               … アイコン生成ツール
-│   └── Installer/               … WiX 5 インストーラ
+│   └── Installer/Resources/     … インストーラ用のライセンス/画像
+├── installer/MonitorianNeo.iss  … Inno Setup のインストーラ定義
 ├── web/public/monitorianneo/    … 公式サイト（PHP・doc-hub へ自動同期）
 ├── .github/workflows/           … release.yml（リリース）, copy_web.yml（web 同期）
 ├── docs/                        … コマンド仕様・コントリビュートガイド
@@ -92,6 +93,7 @@ Monitorian/                      … リポジトリルート（Monitorian の f
   web の文言を触る前に必ずここを確認する。
 - `copy_web.yml` は**リポジトリ名を小文字化したフォルダ**（`public/<repo>`）へ同期する。
   フォルダ名が `monitorianneo` なので、リポジトリ名は `MonitorianNeo` でなければ同期されない。
-- `release.yml` は .NET Framework 4.8 の WPF アプリとして **MSBuild + WiX** でビルドする
-  （`dotnet publish` は使わない）。成果物は `.msi` とポータブル ZIP。
+- `release.yml` は .NET 8 の WPF アプリとして **`dotnet publish`（自己完結・単一ファイル）＋ Inno Setup** でビルドする。
+  インストーラ定義は `installer/MonitorianNeo.iss`。成果物は `-setup.exe` とポータブル ZIP。
+- 動作要件は **Windows 10 1607 以降 / Windows 11（x64）**。Windows 7 / 8.1 は非対応。
 - フォーク元の Monitorian は MIT ライセンス。`LICENSE.txt` の著作権表示とクレジット表記を消さない。

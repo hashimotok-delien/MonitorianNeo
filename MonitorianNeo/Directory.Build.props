@@ -1,5 +1,8 @@
 ﻿<Project>
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
+    <!-- Windows 専用アプリのため、プラットフォーム互換性の警告は不要 -->
+    <!-- WFAC010: DPI は app.manifest で PerMonitor を宣言しており、WPF が処理する -->
+    <NoWarn>$(NoWarn);CA1416;WFAC010</NoWarn>
   </PropertyGroup>
 </Project>

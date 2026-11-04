@@ -374,7 +374,7 @@ h2{
 <section>
   <h2>📥 導入方法</h2>
   <div class="card">
-    <p>リリースページからインストーラー（またはポータブルZIP）をダウンロードして実行するだけ。インストール先は変更でき、管理者権限も不要です。外付けモニターは DDC/CI が有効になっている必要があります。</p>
+    <p>リリースページからインストーラー（またはポータブルZIP）をダウンロードして実行するだけ。インストール先は変更でき、管理者権限も不要です。動作要件は Windows 10（1607 以降）/ 11 の 64bit。外付けモニターは DDC/CI が有効になっている必要があります。</p>
     <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;">
       <a href="<?= $DOWNLOAD_URL ?>" class="btn" target="_blank" rel="noopener">⬇ リリースを開く</a>
       <a href="<?= $DOCS_URL ?>" class="btn" style="background:linear-gradient(45deg,#7c4dff,var(--accent));" target="_blank" rel="noopener">📚 使い方を見る</a>

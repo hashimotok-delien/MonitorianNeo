@@ -16,6 +16,9 @@ Monitorian 4.16.9 を基点にしています。
 ### 変更
 
 - 実行ファイル名を `MonitorianNeo.exe`、ライブラリ名を `MonitorianNeo.Core.dll` に変更
+- .NET Framework 4.8 から **.NET 8** へ移行（自己完結・単一ファイルで配布。ランタイムの別途インストールは不要）
+- Windows 7 / 8.1 のサポートを終了（動作要件は Windows 10 1607 以降 / Windows 11 x64）
+- インストーラーを WiX（MSI）から Inno Setup（setup.exe）に変更
 - インストーラーの製品名を `MonitorianNeo` に変更
 - 設定の保存先を `%LOCALAPPDATA%\MonitorianNeo` に変更
 - Microsoft Store 版向けの記述（Store 配布・winget・サブスクリプションのアドオン）を削除し、

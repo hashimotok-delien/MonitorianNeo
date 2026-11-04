@@ -10,6 +10,9 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# リリース用のビルド成果物（dotnet publish / Inno Setup）
+/dist/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

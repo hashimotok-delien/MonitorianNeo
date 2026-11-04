@@ -13,7 +13,7 @@ namespace Monitorian.Core.Models.Monitor;
 /// </summary>
 /// <remarks>
 /// <see cref="Windows.Graphics.Display.DisplayInformation"/> is only available for
-/// .NET Framework on Windows 11 (10.0.22621.0) or greater. 
+/// .NET Framework on Windows 11 (10.0.22621.0) or greater.
 /// </remarks>
 internal static class DisplayInformationProvider
 {
@@ -299,7 +299,7 @@ internal static class DisplayInformationProvider
 		if (_dispatcherQueueController is null)
 			return null;
 
-		var factory = (IDisplayInformationStaticsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(Windows.Graphics.Display.DisplayInformation));
+		var factory = Windows.Graphics.Display.DisplayInformation.As<IDisplayInformationStaticsInterop>();
 		var iid = typeof(Windows.Graphics.Display.DisplayInformation).GetInterface("IDisplayInformation").GUID;
 		var result = factory.GetForWindow(windowHandle, ref iid, out Windows.Graphics.Display.DisplayInformation displayInfo);
 		return (result is S_OK)
@@ -314,7 +314,7 @@ internal static class DisplayInformationProvider
 	/// <returns>DisplayInformation if successfully gets. Null otherwise.</returns>
 	private static Windows.Graphics.Display.DisplayInformation GetForMonitor(IntPtr monitorHandle)
 	{
-		var factory = (IDisplayInformationStaticsInterop)WindowsRuntimeMarshal.GetActivationFactory(typeof(Windows.Graphics.Display.DisplayInformation));
+		var factory = Windows.Graphics.Display.DisplayInformation.As<IDisplayInformationStaticsInterop>();
 		var iid = typeof(Windows.Graphics.Display.DisplayInformation).GetInterface("IDisplayInformation").GUID;
 		var result = factory.GetForMonitor(monitorHandle, ref iid, out Windows.Graphics.Display.DisplayInformation displayInfo);
 		return (result is S_OK)

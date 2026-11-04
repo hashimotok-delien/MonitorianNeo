@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Monitorian.Core.Models.Monitor;
@@ -482,8 +483,8 @@ public class MonitorConfigurationTest
 
 	private static (bool success, Dictionary<byte, byte[]> vcpCodes) TestExtractVcpCodes(string source)
 	{
-		var @class = new PrivateType(typeof(MonitorConfiguration));
-		var dic = @class.InvokeStatic("ExtractVcpCodes", source) as Dictionary<byte, byte[]>;
+		var method = typeof(MonitorConfiguration).GetMethod("ExtractVcpCodes", BindingFlags.NonPublic | BindingFlags.Static);
+		var dic = method?.Invoke(null, [source]) as Dictionary<byte, byte[]>;
 
 		bool success = (dic is { Count: > 0 });
 		return (success, dic);

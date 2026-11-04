@@ -46,8 +46,8 @@ Additional languages:
 
 ## Requirements
 
- * Windows 7 or newer
- * .NET Framework __4.8__
+ * Windows 10 (1607) or newer, or Windows 11 (x64)
+ * .NET 8 — released builds are self-contained, so no separate runtime installation is required
  * An external monitor must be DDC/CI enabled.
 ![OSD](Images/Dell_ddcci.jpg)
 
@@ -282,17 +282,31 @@ In any case, reporting on the controllability of a monitor MUST include probe.lo
 
 ### Setup
 
-1. [Install Visual Studio](https://docs.microsoft.com/en-us/visualstudio/install/install-visual-studio).
+1. [Install Visual Studio](https://docs.microsoft.com/en-us/visualstudio/install/install-visual-studio) or the [.NET SDK](https://dotnet.microsoft.com/download) 8.0 or newer.
 2. In Visual Studio Installer, go to **Individual components** tab and make sure the following components are checked and installed.
 
-| Components                                                  | Note                                                                                        |
-|-------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| .NET Framework 4.8 SDK<br>.NET Framework 4.8 targeting pack | The version must match TargetFrameworkVersion of<br>project (.csproj) file of each project. |
-| Windows 10 or 11 SDK                                        | The version must be equal to or newer than 10.0.19041.0.                                    |
+| Components           | Note                                                     |
+|----------------------|----------------------------------------------------------|
+| .NET 8.0 SDK         | Builds all projects (the projects target `net8.0-windows10.0.19041.0`). |
+| Windows 10 or 11 SDK | The version must be equal to or newer than 10.0.19041.0. |
 
-3. In Visual Studio, open Extension Manager and make sure **HeatWave for VS2022** is installed.
+3. Load the solution by specifying `/MonitorianNeo/Monitorian.sln`.
 
-4. Load the solution by specifying `/MonitorianNeo/Monitorian.sln`. Then go to the solution explorer and right click the solution name and execute `Restore NuGet Packages`.
+To build from the command line:
+
+```
+dotnet build MonitorianNeo\Monitorian.sln -c Release
+```
+
+To produce the self-contained single file and the installer (the same way as the release workflow):
+
+```
+dotnet publish MonitorianNeo\Monitorian\Monitorian.csproj -c Release -r win-x64 ^
+  --self-contained true -p:PublishSingleFile=true ^
+  -p:IncludeNativeLibrariesForSelfExtract=true -o dist\publish
+
+ISCC.exe /DAppVersion=0.1.0 installer\MonitorianNeo.iss
+```
 
 ### Globalization
 

@@ -26,7 +26,7 @@ public class StartupAgent : IDisposable
 	/// <param name="forwardingArguments">Arguments being forwarded to another instance</param>
 	/// <returns>
 	/// <para>success: True if no other instance exists and this instance successfully starts</para>
-	/// <para>response: Response from another instance if that instance exists and returns an response</para> 
+	/// <para>response: Response from another instance if that instance exists and returns an response</para>
 	/// </returns>
 	/// <remarks>Startup task ID must match that in AppxManifest.xml.</remarks>
 	public (bool success, string response) Start(string name, string startupTaskId,
@@ -105,7 +105,13 @@ public class StartupAgent : IDisposable
 	public Func<string[], Task<string>> HandleRequestAsync
 	{
 		get => _holder?.HandleRequestAsync;
-		set => _holder?.HandleRequestAsync = value;
+		set
+		{
+			if (_holder is not null)
+			{
+				_holder.HandleRequestAsync = value;
+			}
+		}
 	}
 
 	/// <summary>

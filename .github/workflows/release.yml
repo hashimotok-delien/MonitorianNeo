@@ -6,11 +6,11 @@ name: Release MonitorianNeo
 #   2) 手動実行（Actions > Release MonitorianNeo > Run workflow）でバージョンを入力
 #
 # 出力:
-#   - MonitorianNeo-<version>.msi    … インストーラ（WiX・インストール先を選択可能／管理者権限不要）
-#   - MonitorianNeo-win-x64.zip     … ポータブル版
+#   - MonitorianNeo-<version>-setup.exe … インストーラ（Inno Setup・インストール先を選択可能／管理者権限不要）
+#   - MonitorianNeo-win-x64.zip         … Windows x64 自己完結ポータブル版
 #   - SHA256SUMS.txt
 #
-# このアプリは .NET Framework 4.8 の WPF アプリのため、dotnet publish ではなく MSBuild でビルドする。
+# .NET 8 の WPF アプリなので、PulseWeaver と同じく dotnet publish で自己完結・単一ファイル発行する。
 
 on:
   push:
@@ -36,11 +36,10 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  SOLUTION: MonitorianNeo/MonitorianNeo.sln
+  DOTNET_VERSION: '8.0.x'
   APP_PROJECT: MonitorianNeo/Monitorian/Monitorian.csproj
-  INSTALLER_PROJECT: MonitorianNeo/Installer/Installer.wixproj
-  APP_OUTPUT: MonitorianNeo/Monitorian/bin/Release
-  CONFIGURATION: Release
+  INSTALLER_SCRIPT: installer/MonitorianNeo.iss
+  PUBLISH_DIR: dist/publish
 
 jobs:
   release:
@@ -75,71 +74,74 @@ jobs:
             throw "不正なバージョンです: $version (例: 0.1.0 または 0.2.0-rc.1)"
           }
 
-          # MSI の Version は x.y.z の数値のみ扱えるため、プレリリース表記を落とす
-          $msiVersion = ($version -split '-')[0]
-
           "value=$version" >> $env:GITHUB_OUTPUT
-          "msi=$msiVersion" >> $env:GITHUB_OUTPUT
           "tag=v$version"  >> $env:GITHUB_OUTPUT
-          Write-Host "リリースバージョン: v$version (MSI: $msiVersion)"
+          Write-Host "リリースバージョン: v$version"
 
-      - name: 3. Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
+      - name: 3. Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: 4. Restore NuGet packages
+      - name: 4. Publish self-contained app and create ZIP
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          msbuild $env:SOLUTION -t:Restore -p:Configuration=$env:CONFIGURATION -v:m
-          if ($LASTEXITCODE -ne 0) { throw 'NuGet パッケージの復元に失敗しました。' }
+          dotnet publish $env:APP_PROJECT `
+            --configuration Release `
+            --runtime win-x64 `
+            --self-contained true `
+            -p:PublishSingleFile=true `
+            -p:IncludeNativeLibrariesForSelfExtract=true `
+            --output $env:PUBLISH_DIR
+          if ($LASTEXITCODE -ne 0) { throw 'dotnet publish に失敗しました。' }
 
-      - name: 5. Build app and create ZIP
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = 'Stop'
-          msbuild $env:APP_PROJECT -p:Configuration=$env:CONFIGURATION -v:m
-          if ($LASTEXITCODE -ne 0) { throw 'アプリのビルドに失敗しました。' }
-
-          if (-not (Test-Path (Join-Path $env:APP_OUTPUT 'MonitorianNeo.exe'))) {
-            throw "MonitorianNeo.exe が見つかりません: $env:APP_OUTPUT"
+          if (-not (Test-Path (Join-Path $env:PUBLISH_DIR 'MonitorianNeo.exe'))) {
+            throw '発行された MonitorianNeo.exe が見つかりません。'
           }
 
-          $publishDir = 'dist\portable'
-          New-Item -ItemType Directory -Path $publishDir -Force | Out-Null
-          Copy-Item -Path (Join-Path $env:APP_OUTPUT '*') -Destination $publishDir -Recurse -Force
-          Copy-Item README.md $publishDir -ErrorAction SilentlyContinue
-          Copy-Item CHANGELOG.md $publishDir -ErrorAction SilentlyContinue
+          Copy-Item README.md $env:PUBLISH_DIR -ErrorAction SilentlyContinue
+          Copy-Item CHANGELOG.md $env:PUBLISH_DIR -ErrorAction SilentlyContinue
 
           New-Item -ItemType Directory -Path 'dist' -Force | Out-Null
-          Compress-Archive -Path "$publishDir\*" -DestinationPath 'dist\MonitorianNeo-win-x64.zip' -Force
+          Compress-Archive -Path "$env:PUBLISH_DIR\*" -DestinationPath 'dist\MonitorianNeo-win-x64.zip' -Force
+          if (-not (Test-Path 'dist\MonitorianNeo-win-x64.zip')) {
+            throw '配布 ZIP の作成に失敗しました。'
+          }
           Get-ChildItem dist -File | Select-Object Name, Length | Format-Table | Out-String | Write-Host
 
-      - name: 6. Build installer (WiX)
+      - name: 5. Install Inno Setup
+        shell: pwsh
+        run: |
+          choco install innosetup --no-progress -y
+          if ($LASTEXITCODE -ne 0) { throw 'Inno Setup のインストールに失敗しました。' }
+
+      - name: 6. Build installer
         shell: pwsh
         env:
-          MSI_VERSION: ${{ steps.version.outputs.msi }}
+          VERSION: ${{ steps.version.outputs.value }}
         run: |
           $ErrorActionPreference = 'Stop'
-          msbuild $env:INSTALLER_PROJECT `
-            -p:Configuration=$env:CONFIGURATION `
-            -p:Platform=x86 `
-            "-p:ProductVersion=$env:MSI_VERSION" `
-            -v:m
+          $iscc = @(
+            'C:\Program Files (x86)\Inno Setup 6\ISCC.exe',
+            'C:\Program Files\Inno Setup 6\ISCC.exe',
+            "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe"
+          ) | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $iscc) { throw 'ISCC.exe が見つかりません。' }
+
+          & $iscc "/DAppVersion=$env:VERSION" $env:INSTALLER_SCRIPT
           if ($LASTEXITCODE -ne 0) { throw 'インストーラのビルドに失敗しました。' }
 
-          $msi = Get-ChildItem 'MonitorianNeo\Installer\bin' -Recurse -Filter *.msi -ErrorAction SilentlyContinue |
-            Select-Object -First 1
-          if (-not $msi) { throw 'インストーラー (.msi) が見つかりません。' }
-
-          Copy-Item $msi.FullName "dist\MonitorianNeo-$env:MSI_VERSION.msi" -Force
-          Get-Item "dist\MonitorianNeo-$env:MSI_VERSION.msi" | Select-Object Name, Length | Format-Table | Out-String | Write-Host
+          $setup = "dist\MonitorianNeo-$env:VERSION-setup.exe"
+          if (-not (Test-Path $setup)) { throw "インストーラが見つかりません: $setup" }
+          Get-Item $setup | Select-Object Name, Length | Format-Table | Out-String | Write-Host
 
       - name: 7. Checksums
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
 
-          $files = @(Get-ChildItem -Path 'dist\*.zip', 'dist\*.msi' -File -ErrorAction SilentlyContinue)
+          $files = @(Get-ChildItem -Path 'dist\*.zip', 'dist\*-setup.exe' -File -ErrorAction SilentlyContinue)
           if ($files.Count -eq 0) {
             throw 'チェックサム対象のファイルが見つかりません（ビルドに失敗しています）。'
           }
@@ -149,6 +151,10 @@ jobs:
           }
           $lines | Out-File -FilePath 'dist\SHA256SUMS.txt' -Encoding ascii
           $lines | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding ascii -Append
+
+          $size = (Get-Item 'dist\SHA256SUMS.txt').Length
+          Write-Host "SHA256SUMS.txt: $size バイト / $($files.Count) 件"
+          if ($size -le 0) { throw 'SHA256SUMS.txt が空です。' }
           Get-Content 'dist\SHA256SUMS.txt'
 
       - name: 8. Create GitHub Release
@@ -161,18 +167,20 @@ jobs:
           body: |
             ## インストール
 
-            下の `MonitorianNeo-${{ steps.version.outputs.msi }}.msi` を実行し、ウィザードに従ってください
+            下の `MonitorianNeo-${{ steps.version.outputs.value }}-setup.exe` を実行し、ウィザードに従ってください
             （インストール先は変更できます／管理者権限不要）。
 
             コマンドラインから入れる場合:
 
             ```powershell
-            msiexec /i MonitorianNeo-${{ steps.version.outputs.msi }}.msi /qn
+            .\MonitorianNeo-${{ steps.version.outputs.value }}-setup.exe /VERYSILENT
             ```
 
-            **動作要件**: Windows 10 / 11（x64）と .NET Framework 4.8。
-            Windows 10 1903 以降では .NET Framework 4.8 が標準で入っているため、追加のインストールは不要です。
+            **動作要件**: Windows 10（1607 以降）/ 11（x64）。
+            アプリは自己完結型のため、.NET ランタイムの別途インストールは不要です。
             外付けモニターの明るさを調整するには、そのモニターで DDC/CI が有効になっている必要があります。
+
+            > Windows 7 / 8.1 は .NET 8 が動作しないため非対応です。
 
             ### ポータブル版
 
@@ -184,7 +192,7 @@ jobs:
 
             変更内容の詳細は [CHANGELOG.md](https://github.com/hashimotok-delien/MonitorianNeo/blob/master/CHANGELOG.md) を参照してください。
           files: |
-            dist/MonitorianNeo-*.msi
+            dist/MonitorianNeo-*-setup.exe
             dist/MonitorianNeo-win-x64.zip
             dist/SHA256SUMS.txt
           fail_on_unmatched_files: true
